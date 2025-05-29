@@ -75,7 +75,7 @@
         }
         .pdf-page-render p,
         .pdf-page-render li,
-        .pdf-page-render div:not(#pdf-template-notice .notice-details-grid):not(#pdf-template-notice .reply-slip-details-grid):not(#pdf-template-notice .notice-date-principal-moved), /* More specific exclusions for grid/flex parents */
+        .pdf-page-render div:not(#pdf-template-notice .notice-details-grid):not(#pdf-template-notice .reply-slip-details-grid):not(#pdf-template-notice .notice-date-principal-moved),
         .pdf-page-render span, 
         .pdf-page-render td,
         .pdf-page-render th
@@ -99,15 +99,14 @@
         .pdf-page-render .signature-line { border-bottom: 0.5px solid black; display: inline-block; min-height: 1em; vertical-align: bottom;} 
         .underline-value { border-bottom: 0.5px solid black; padding: 0 1mm; display: inline-block; min-height: 1.2em; vertical-align: bottom; }
 
-        /* === Specific styles for #pdf-template-notice === */
         #pdf-template-notice > div:first-child { 
             min-height: 20mm !important; 
-            position: relative; /* Needed for absolute positioning of children */
+            position: relative; 
         }
         #pdf-template-notice .school-logo-img { 
             position: absolute;
             top: 4mm !important; 
-            left: 8mm !important; /* Keep original left padding */
+            left: 8mm !important; 
             height: 20mm !important; 
             width: auto;   
             object-fit: contain; 
@@ -115,7 +114,7 @@
         #pdf-template-notice .notice-top-right-container { 
             position: absolute;
             top: 4mm !important; 
-            right: 8mm !important; /* Keep original right padding */
+            right: 8mm !important; 
             text-align: right; font-size: 11.5pt;
         }
         
@@ -134,14 +133,14 @@
         }
         
         #pdf-template-notice .notice-closing-block { 
-            margin-top: 2mm !important; /* Adjusted from 1.5mm for a bit more space */
+            margin-top: 2mm !important; 
         }
         #pdf-template-notice .notice-date-principal-moved { 
-            display: flex; justify-content: space-between; align-items: baseline; 
+            display: flex !important; justify-content: space-between !important; align-items: baseline !important; 
             margin-bottom: 1.5mm !important; font-size: 11.5pt; 
         }
         #pdf-template-notice .notice-date-principal-moved .date-moved { border-bottom: 0.5px solid black; min-width: 50mm;}
-        #pdf-template-notice .notice-date-principal-moved .principal-name { margin-left: auto; /* Ensures it pushes to the right */ }
+        #pdf-template-notice .notice-date-principal-moved .principal-name { margin-left: auto; }
         #pdf-template-notice .notice-date-principal-moved .principal-name span { border-bottom: 0.5px solid black; padding-left: 30mm; }
 
         #pdf-template-notice .notice-school-name-right { 
@@ -154,20 +153,20 @@
         }
         
         #pdf-template-notice .activity-details-box { 
-            border: 0.5px solid black; padding: 2mm !important; /* slightly increased padding */
+            border: 0.5px solid black; padding: 2mm !important; 
             margin: 3mm 0 !important; 
         }
         #pdf-template-notice .activity-details-box * { 
             line-height: 1.35 !important; 
         }
         #pdf-template-notice .notice-details-header {
-            font-weight: bold; margin-bottom: 2mm !important; /* slightly increased */
+            font-weight: bold; margin-bottom: 2mm !important; 
             font-size: 11.5pt; text-align: center;
         }
         #pdf-template-notice .notice-details-grid { 
-            display: grid !important; /* Ensure grid is applied */
+            display: grid !important; 
             grid-template-columns: auto 1fr auto 1fr !important; 
-            gap: 1mm 4mm !important; /* Adjusted gap */
+            gap: 1mm 4mm !important; 
             margin-bottom: 1.5mm !important; font-size: 11.5pt;
         }
         #pdf-template-notice .notice-details-grid > span { page-break-inside: avoid !important; } 
@@ -182,8 +181,8 @@
              border-bottom: 0.5px solid black; min-width: 40mm; padding-left:1mm; 
         }
         #pdf-template-notice .notice-remarks-container { 
-            margin-top: 1.5mm !important; /* Adjusted */
-            display: flex; font-size: 11.5pt;
+            margin-top: 1.5mm !important; 
+            display: flex !important; font-size: 11.5pt;
         }
         #pdf-template-notice .notice-remarks-container .label { font-weight: bold; white-space: nowrap; padding-right:1mm; flex-shrink: 0;}
         #pdf-template-notice .notice-remarks-container .value { border-bottom: 0.5px solid black; display: inline-block; flex-grow: 1; min-height: 1.2em; vertical-align: bottom; padding-left:1mm;}
@@ -192,12 +191,12 @@
         }
 
         #pdf-template-notice .notice-signatures-container { 
-            display: flex !important; /* Ensure flex */
+            display: flex !important; 
             justify-content: space-between !important; 
             align-items: flex-start; 
-            margin-top: 4mm !important; /* Adjusted */
+            margin-top: 4mm !important; 
             min-height: auto !important; 
-            padding-bottom: 2mm !important; /* Adjusted */
+            padding-bottom: 2mm !important; 
         }
         #pdf-template-notice .notice-school-stamp-area { font-size: 11.5pt; flex-basis: 45%; text-align: left;}
         #pdf-template-notice .notice-school-stamp-box { 
@@ -220,9 +219,9 @@
         }
         #pdf-template-notice .reply-slip-header { 
             text-align: center; font-size: 13pt; font-weight: bold; 
-            margin: 4mm 0 2mm 0 !important; /* Adjusted */
-            border-top: 1px dashed black !important; /* Ensure dashed line */
-            padding-top: 3mm !important; /* Adjusted */
+            margin: 4mm 0 2mm 0 !important; 
+            border-top: 1px dashed black !important; 
+            padding-top: 3mm !important; 
         }
         #pdf-template-notice .reply-slip-body { 
             font-size: 11.5pt; margin-bottom: 1mm !important;
@@ -232,13 +231,13 @@
             display:block; margin: 1.5mm auto !important; width: 75% !important;
         }
         #pdf-template-notice .reply-slip-school-right { 
-            margin-top: 3mm !important; /* Adjusted */
+            margin-top: 3mm !important; 
             text-align:right; font-size: 11.5pt; 
         }
         #pdf-template-notice .reply-slip-details-grid { 
-            display: grid !important; /* Ensure grid */
+            display: grid !important; 
             grid-template-columns: auto 1fr !important; 
-            gap: 1.5mm !important; margin-top: 2mm !important; /* Adjusted */
+            gap: 1.5mm !important; margin-top: 2mm !important; 
             font-size: 11.5pt;
         }
         #pdf-template-notice .reply-slip-details-grid > span { page-break-inside: avoid !important; padding-top: 0.5mm; padding-bottom: 0.5mm; }
@@ -246,7 +245,6 @@
         #pdf-template-notice .reply-slip-details-grid > span:nth-child(even) { border-bottom: 0.5px solid black; }
         #pdf-template-notice .reply-slip-details-grid div .class-no-span { border-bottom: 0.5px solid black; padding: 0 5mm; margin: 0 2mm;}
 
-        /* === End of specific styles for #pdf-template-notice === */
 
         #pdf-template-e-notice .enotice-version {text-align:right; font-size: 8.5pt; margin-bottom: 2mm;}
         #pdf-template-e-notice .grid-container-enotice { display: grid; grid-template-columns: auto 1fr; column-gap: 1.5mm; row-gap: 1mm; margin-bottom: 3mm; font-size: 9.5pt;}
@@ -303,7 +301,6 @@
             top: -9999px !important;
             background: white !important; 
             color: black !important;
-            /* display: block !important; /* This is now set dynamically in JS */
         }
 
         @media (max-width: 768px) {
@@ -371,7 +368,12 @@
                 <thead> <tr> <th>序號</th> <th>班別</th> <th>學號</th> <th>姓名</th> <th>活動角色</th> <th>操作</th> </tr> </thead>
                 <tbody id="student-list-tbody"></tbody>
             </table>
-            <button type="button" id="add-student-row" class="secondary" style="margin-top:10px; font-size:0.9em; padding: 8px 12px;">新增學生</button>
+            <div style="margin-top:10px; display:flex; gap:10px; justify-content: flex-start;">
+                <button type="button" id="add-student-row" class="secondary" style="font-size:0.9em; padding: 8px 12px;">新增學生</button>
+                <label for="import-student-list-input" class="file-input-label secondary" style="font-size:0.9em; padding: 8px 12px;">匯入學生名單 (Excel/CSV)</label>
+                <input type="file" id="import-student-list-input" class="file-input-hidden" accept=".xlsx,.csv">
+            </div>
+
             <div class="button-group">
                 <button type="button" id="generate-pdf-main">下載 PDF</button>
                 <button type="button" id="export-inputs-excel">匯出目前輸入 (Excel)</button>
@@ -653,7 +655,8 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             const advancedModeCheckbox = document.getElementById('advanced-mode-checkbox');
-            const downloadOriginalTemplateBtn = document.getElementById('download-original-template');
+            const downloadOriginalBlankTemplateBtn = document.getElementById('download-original-template');
+            // const downloadPopulatedTemplateBtn = document.getElementById('download-populated-template'); // Removed
             const activityOriginalPriceGroup = document.getElementById('activity-original-price-group');
             const noticeTypeSelect = document.getElementById('notice-type');
             const parentOptionsGroup = document.getElementById('parent-options-group');
@@ -671,7 +674,8 @@
 
             function toggleAdvancedMode() {
                 const isAdvanced = advancedModeCheckbox.checked;
-                downloadOriginalTemplateBtn.classList.toggle('hidden', !isAdvanced);
+                downloadOriginalBlankTemplateBtn.classList.toggle('hidden', !isAdvanced);
+                // downloadPopulatedTemplateBtn.classList.toggle('hidden', !isAdvanced); // Removed
                 if (isAdvanced) { activityOriginalPriceGroup.classList.remove('hidden'); } 
                 else { toggleOriginalPriceVisibility(); }
             }
@@ -709,28 +713,62 @@
             const addStudentRowBtn = document.getElementById('add-student-row');
             let studentCounter = 0;
 
-            function addStudentRow() {
+            function addStudentRow(studentData = {}) {
                 studentCounter++;
                 const row = studentListTbody.insertRow();
                 row.innerHTML = `
                     <td>${studentCounter}</td>
-                    <td><input type="text" name="student-class-${studentCounter}" class="student-class"></td>
-                    <td><input type="text" name="student-id-${studentCounter}" class="student-id"></td>
-                    <td><input type="text" name="student-name-${studentCounter}" class="student-name"></td>
+                    <td><input type="text" name="student-class-${studentCounter}" class="student-class" value="${studentData.class || ''}"></td>
+                    <td><input type="text" name="student-id-${studentCounter}" class="student-id" value="${studentData.id || ''}"></td>
+                    <td><input type="text" name="student-name-${studentCounter}" class="student-name" value="${studentData.name || ''}"></td>
                     <td>
                         <select name="student-role-${studentCounter}" class="student-role">
                             <option value="參加者">參加者</option> <option value="主席">主席</option> <option value="組長">組長</option> <option value="其他">其他</option>
                         </select>
-                        <input type="text" name="student-role-other-${studentCounter}" class="student-role-other" placeholder="請註明其他角色" style="display:none; margin-top:3px;">
+                        <input type="text" name="student-role-other-${studentCounter}" class="student-role-other" placeholder="請註明其他角色" style="display:none;">
                     </td>
                     <td><button type="button" class="remove-student-row">移除</button></td>
                 `;
                 const roleSelect = row.querySelector('.student-role');
                 const roleOtherInput = row.querySelector('.student-role-other');
+                
+                if (studentData.role) {
+                    const roleValue = String(studentData.role).trim(); 
+                    const existingOption = Array.from(roleSelect.options).find(opt => opt.value === roleValue);
+                    if (existingOption) {
+                        roleSelect.value = roleValue;
+                    } else { 
+                        roleSelect.value = "其他";
+                        roleOtherInput.value = roleValue; 
+                    }
+                } else {
+                    roleSelect.value = "參加者"; 
+                }
+
+                roleOtherInput.style.display = roleSelect.value === '其他' ? 'block' : 'none';
+                if(studentData.roleOther) roleOtherInput.value = studentData.roleOther;
+
+
                 roleSelect.addEventListener('change', function() { roleOtherInput.style.display = this.value === '其他' ? 'block' : 'none'; });
-                row.querySelector('.remove-student-row').addEventListener('click', function() { this.closest('tr').remove(); });
+                row.querySelector('.remove-student-row').addEventListener('click', function() { this.closest('tr').remove(); renumberStudents(); });
             }
-            addStudentRowBtn.addEventListener('click', addStudentRow);
+            
+            function renumberStudents() {
+                const rows = studentListTbody.querySelectorAll('tr');
+                studentCounter = 0;
+                rows.forEach((row, index) => {
+                    studentCounter = index + 1;
+                    row.cells[0].innerText = studentCounter;
+                    row.querySelectorAll('input, select').forEach(input => {
+                        const nameAttr = input.getAttribute('name');
+                        if (nameAttr) {
+                            input.setAttribute('name', nameAttr.replace(/-\d+$/, `-${studentCounter}`));
+                        }
+                    });
+                });
+            }
+
+            addStudentRowBtn.addEventListener('click', () => addStudentRow());
             addStudentRow(); 
 
             const activityCategoryCheckboxes = document.querySelectorAll('#activity-category-checkboxes input[type="checkbox"]');
@@ -1001,9 +1039,16 @@
             document.getElementById('generate-pdf-main').addEventListener('click', () => generatePdf());
             
             function getFormValue(id) { return document.getElementById(id) ? document.getElementById(id).value : ''; }
-            function getFormDate(id) { 
+            function getFormDate(id, excelFormat = false) { 
                 const val = getFormValue(id); if (!val) return '';
-                try { const date = new Date(val); if (isNaN(date.getTime())) return ''; return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`; } catch (e) { return ''; }
+                try { 
+                    const date = new Date(val); 
+                    if (isNaN(date.getTime())) return ''; 
+                    if (excelFormat) { 
+                         return val; 
+                    }
+                    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`; 
+                } catch (e) { return ''; }
             }
             function getFormTime(id) {
                 const val = getFormValue(id); if (!val) return '';
@@ -1150,10 +1195,10 @@
                         slpRow.innerHTML = `<td>${index + 1}.</td><td>${studentClass}</td><td>${studentId}</td><td>${studentName}</td><td>${roleChairman}</td><td>${roleLeader}</td><td>${roleParticipant}</td><td>${roleOtherText}</td>`;
                     }
                 });
-                if (slpStudentTbody && studentRows.length < 10) {
-                    for (let i = studentRows.length + 1; i <= 10; i++) {
+                if (slpStudentTbody && studentRows.length < 10) { 
+                    for (let i = studentRows.length; i < 10; i++) {
                         const emptyRow = slpStudentTbody.insertRow();
-                        emptyRow.innerHTML = `<td>${i}.</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>`;
+                        emptyRow.innerHTML = `<td>${i + 1}.</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>`;
                     }
                 }
             }
@@ -1192,8 +1237,9 @@
                         studentListTbody.innerHTML = ''; studentCounter = 0;
                         if (formData['出席學生名單'] && formData['出席學生名單'].length > 0) {
                             const studentStrings = formData['出席學生名單'].toString().split('||');
-                            studentStrings.forEach(s => { if (s) { const student = JSON.parse(s); addStudentRow(); const lastRow = studentListTbody.lastElementChild; lastRow.querySelector('.student-class').value = student.class; lastRow.querySelector('.student-id').value = student.id; lastRow.querySelector('.student-name').value = student.name; const roleSelect = lastRow.querySelector('.student-role'); roleSelect.value = student.role; const roleOtherInput = lastRow.querySelector('.student-role-other'); roleOtherInput.value = student.roleOther; roleOtherInput.style.display = student.role === '其他' ? 'block' : 'none'; }});
+                            studentStrings.forEach(s => { if (s) { const student = JSON.parse(s); addStudentRow(student); }}); 
                         } if (studentListTbody.children.length === 0) { addStudentRow(); }
+                        renumberStudents();
                         noticeTypeSelect.dispatchEvent(new Event('change')); needsParentOptionsSelect.dispatchEvent(new Event('change')); parentOptionsContentSelect.dispatchEvent(new Event('change')); externalOrgDataSourceSelect.dispatchEvent(new Event('change'));
                         alert('資料已成功匯入！');
                     };
@@ -1202,10 +1248,80 @@
                 }
             });
 
-            document.getElementById('download-original-template').addEventListener('click', function() {
-                const link = document.createElement('a'); link.href = 'PL1 通告綜合版_無需收費__BLANK_20250214.xlsx'; link.download = 'PL1 通告綜合版_無需收費__BLANK_20250214.xlsx';
-                document.body.appendChild(link); link.click(); document.body.removeChild(link);
+            document.getElementById('import-student-list-input').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+                showLoader();
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = e.target.result;
+                        let jsonData;
+                        if (file.name.endsWith('.csv')) {
+                            const csvData = XLSX.read(data, {type: 'string', raw: true}); 
+                            const worksheet = csvData.Sheets[csvData.SheetNames[0]];
+                            jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                        } else { 
+                            const workbook = XLSX.read(data, {type: 'array'});
+                            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                            jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                        }
+
+                        if (!jsonData || jsonData.length < 1) {
+                            alert('學生名單檔案為空或格式不正確。'); return;
+                        }
+                        
+                        const headers = jsonData[0].map(h => String(h || '').toLowerCase().trim()); 
+                        const colMap = { class: -1, no: -1, name: -1, role: -1 };
+
+                        headers.forEach((header, index) => {
+                            if (["class", "班別"].includes(header)) colMap.class = index;
+                            else if (["no", "number", ".no", "學號"].includes(header)) colMap.no = index;
+                            else if (["name", "student name", "姓名"].includes(header)) colMap.name = index;
+                            else if (["role", "活動角色"].includes(header)) colMap.role = index;
+                        });
+
+                        studentListTbody.innerHTML = ''; 
+                        studentCounter = 0; 
+
+                        jsonData.slice(1).forEach(row => {
+                            if (row.some(cell => cell !== null && cell !== undefined && String(cell).trim() !== '')) { 
+                                const studentData = {
+                                    class: colMap.class !== -1 ? (row[colMap.class] || '') : '',
+                                    id: colMap.no !== -1 ? (row[colMap.no] || '') : '',
+                                    name: colMap.name !== -1 ? (row[colMap.name] || '') : '',
+                                    role: colMap.role !== -1 ? (String(row[colMap.role] || '').trim()) : '參加者'
+                                };
+                                addStudentRow(studentData);
+                            }
+                        });
+                        if (studentListTbody.children.length === 0) addStudentRow(); 
+                        renumberStudents();
+                        alert('學生名單已成功匯入！');
+                    } catch (err) {
+                        console.error("匯入學生名單時發生錯誤:", err);
+                        alert("匯入學生名單時發生錯誤: " + err.message);
+                    } finally {
+                        hideLoader();
+                        event.target.value = null; 
+                    }
+                };
+                if (file.name.endsWith('.csv')) {
+                    reader.readAsText(file);
+                } else {
+                    reader.readAsArrayBuffer(file);
+                }
             });
+            
+            downloadOriginalBlankTemplateBtn.addEventListener('click', function() {
+                const link = document.createElement('a');
+                link.href = 'PL1 通告綜合版_無需收費__BLANK_20250214.xlsx'; 
+                link.download = 'PL1 通告綜合版_無需收費__BLANK_20250214.xlsx';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+
         }); 
     </script>
 </body>
