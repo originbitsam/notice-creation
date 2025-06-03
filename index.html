@@ -97,7 +97,7 @@
         .pdf-page-render .grid-item label { font-weight: bold; }
         .pdf-page-render .signature-area { margin-top: 5mm; }
         .pdf-page-render .signature-line { border-bottom: 0.5px solid black; display: inline-block; min-height: 1em; vertical-align: bottom;} 
-        .underline-value { border-bottom: 0.5px solid black; padding: 0 1mm; display: inline-block; min-height: 1.2em; vertical-align: bottom; }
+        .underline-value { border-bottom: 0.5px solid black; padding: 0 1mm; display: inline-block; min-height: 1.35em; vertical-align: bottom; }
 
         #pdf-template-notice > div:first-child { 
             min-height: 20mm !important; 
@@ -139,9 +139,7 @@
             display: flex !important; justify-content: space-between !important; align-items: baseline !important; 
             margin-bottom: 1.5mm !important; font-size: 11.5pt; 
         }
-        #pdf-template-notice .notice-date-principal-moved .date-moved { border-bottom: 0.5px solid black; min-width: 50mm;}
         #pdf-template-notice .notice-date-principal-moved .principal-name { margin-left: auto; }
-        #pdf-template-notice .notice-date-principal-moved .principal-name span { border-bottom: 0.5px solid black; padding-left: 30mm; }
 
         #pdf-template-notice .notice-school-name-right { 
             text-align: right; font-weight: bold; font-size: 11.5pt; 
@@ -165,11 +163,11 @@
         }
         #pdf-template-notice .notice-details-grid { 
             display: grid !important; 
-            grid-template-columns: auto 1fr auto 1fr !important; 
+            grid-template-columns: auto minmax(45mm, 1fr) auto minmax(45mm, 1fr) !important; 
             gap: 1mm 4mm !important; 
             margin-bottom: 1.5mm !important; font-size: 11.5pt;
         }
-        #pdf-template-notice .notice-details-grid > span { page-break-inside: avoid !important; } 
+        #pdf-template-notice .notice-details-grid > span { page-break-inside: avoid !important; min-height: 1.35em; vertical-align: bottom; display: flex; flex-direction: column; justify-content: flex-end;} 
         #pdf-template-notice .notice-details-grid > span:nth-child(4n+1), 
         #pdf-template-notice .notice-details-grid > span:nth-child(4n+3) 
         { 
@@ -178,14 +176,18 @@
         #pdf-template-notice .notice-details-grid > span:nth-child(4n+2), 
         #pdf-template-notice .notice-details-grid > span:nth-child(4n)    
         { 
-             border-bottom: 0.5px solid black; min-width: 40mm; padding-left:1mm; 
+             border-bottom: 0.5px solid black; padding-left:1mm; 
+             width: 100%; 
         }
+        #pdf-template-notice .notice-details-grid > span > div { min-height: 1.35em; } /* For multi-line assembly */
+
+
         #pdf-template-notice .notice-remarks-container { 
             margin-top: 1.5mm !important; 
             display: flex !important; font-size: 11.5pt;
         }
         #pdf-template-notice .notice-remarks-container .label { font-weight: bold; white-space: nowrap; padding-right:1mm; flex-shrink: 0;}
-        #pdf-template-notice .notice-remarks-container .value { border-bottom: 0.5px solid black; display: inline-block; flex-grow: 1; min-height: 1.2em; vertical-align: bottom; padding-left:1mm;}
+        #pdf-template-notice .notice-remarks-container .value { border-bottom: 0.5px solid black; display: inline-block; width: 100%; min-height: 1.35em; vertical-align: bottom; padding-left:1mm;}
         #pdf-template-notice .notice-cost-info {
             margin: 2mm 0 1mm 0 !important; font-size: 11.5pt; text-align: left; padding-left: 1mm;
         }
@@ -208,7 +210,7 @@
         #pdf-template-notice .notice-teacher-signature-area { 
             font-size: 11.5pt; text-align:left; flex-basis: 50%;
         }
-        #pdf-template-notice .teacher-sig-line { border-bottom: 0.5px solid black; min-width: 50mm; display:inline-block; text-align: center;}
+        #pdf-template-notice .teacher-sig-line { border-bottom: 0.5px solid black; min-width: 40mm; display:inline-block; text-align: center; min-height: 1.35em; vertical-align: bottom;}
         
         #pdf-template-notice .reply-slip-section-wrapper {
             page-break-inside: avoid !important; 
@@ -228,7 +230,7 @@
         }
         #pdf-template-notice .reply-slip-activity-name { 
             border-bottom: 0.5px solid black; font-weight:bold; text-align:center; 
-            display:block; margin: 1.5mm auto !important; width: 75% !important;
+            display:block; margin: 1.5mm auto !important; width: 75% !important; min-height: 1.35em;
         }
         #pdf-template-notice .reply-slip-school-right { 
             margin-top: 3mm !important; 
@@ -240,10 +242,13 @@
             gap: 1.5mm !important; margin-top: 2mm !important; 
             font-size: 11.5pt;
         }
-        #pdf-template-notice .reply-slip-details-grid > span { page-break-inside: avoid !important; padding-top: 0.5mm; padding-bottom: 0.5mm; }
+        #pdf-template-notice .reply-slip-details-grid > span,
+        #pdf-template-notice .reply-slip-details-grid > div { page-break-inside: avoid !important; padding-top: 0.5mm; padding-bottom: 0.5mm; min-height: 1.35em; vertical-align: bottom;}
         #pdf-template-notice .reply-slip-details-grid > span:nth-child(odd) { font-weight: normal; white-space:nowrap; }
-        #pdf-template-notice .reply-slip-details-grid > span:nth-child(even) { border-bottom: 0.5px solid black; }
-        #pdf-template-notice .reply-slip-details-grid div .class-no-span { border-bottom: 0.5px solid black; padding: 0 5mm; margin: 0 2mm;}
+        #pdf-template-notice .reply-slip-details-grid .reply-underline-dynamic-container > .reply-underline-dynamic {
+            display: inline-block; border-bottom: 0.5px solid black; padding: 0 1mm; min-width: 60mm; min-height: 1.35em; vertical-align: bottom;
+        }
+        #pdf-template-notice .reply-slip-details-grid div .class-no-span { border-bottom: 0.5px solid black; padding: 0 2mm; margin: 0 2mm; min-width:15mm; display:inline-block; min-height:1.35em; vertical-align:bottom;}
 
 
         #pdf-template-e-notice .enotice-version {text-align:right; font-size: 8.5pt; margin-bottom: 2mm;}
@@ -287,8 +292,8 @@
         #pdf-template-slp-form .slp-notes ol { padding-left: 2.5mm; margin-top: 0.6mm;} 
         #pdf-template-slp-form .slp-notes li { margin-bottom: 0.3mm;} 
         #pdf-template-slp-form .slp-signatures { margin-top: 4mm; display: flex; justify-content: space-between; font-size: 9.5pt;}
-        #pdf-template-slp-form .slp-signature-item { min-width: 38mm; } 
-        #pdf-template-slp-form .slp-signature-item .signature-line {width: 50%;}
+        #pdf-template-slp-form .slp-signature-item { min-width: 38mm; white-space: nowrap; display:flex; align-items: baseline; } 
+        #pdf-template-slp-form .slp-signature-item .signature-line {width: 50%; margin-left: 2mm;}
 
         #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 9999; display: flex; justify-content: center; align-items: center;}
         .loading-spinner { border: 6px solid #f3f3f3; border-top: 6px solid #3498db; border-radius: 50%; width: 50px; height: 50px; animation: spin 0.8s linear infinite; }
@@ -303,11 +308,43 @@
             color: black !important;
         }
 
+        .assembly-group-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .assembly-group-item label {
+            font-size: 0.85em;
+            margin-bottom: 2px;
+        }
+        .assembly-group-item input {
+            width: 100%;
+        }
+        .assembly-group-item button {
+            padding: 6px 10px;
+            font-size: 0.8em;
+            background-color: #e74c3c;
+            align-self: center; /* Align button vertically */
+            margin-top: 18px; /* Approximate alignment with input fields that have labels */
+        }
+
+
         @media (max-width: 768px) {
             .form-grid { grid-template-columns: 1fr; }
             h1 { font-size: 1.6em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
             button, .file-input-label { font-size: 0.95em; padding: 10px 15px;}
             .container { padding: 15px; }
+            .assembly-group-item {
+                grid-template-columns: 1fr; /* Stack on smaller screens */
+            }
+            .assembly-group-item button {
+                margin-top: 5px; /* Adjust margin when stacked */
+            }
         }
     </style>
 </head>
@@ -331,9 +368,15 @@
                 <div class="form-group"> <label for="activity-date">活動日期 (樣式：2023年9月1日):</label> <input type="date" id="activity-date" name="activity-date"> </div>
                 <div class="form-group"> <label for="activity-time">活動時間 (樣式：上午9:00至下午5:00):</label> <input type="text" id="activity-time" name="activity-time"> </div>
                 <div class="form-group"> <label for="activity-duration">活動時數 (樣式：8小時):</label> <input type="text" id="activity-duration" name="activity-duration"> </div>
-                <div class="form-group"> <label for="assembly-time">集合時間 (樣式：上午9:00):</label> <input type="time" id="assembly-time" name="assembly-time"> </div>
+                
+                <div class="form-group form-group-span-2"> 
+                    <label style="font-weight:bold; color: #333; margin-bottom: 8px;">集合安排 (可新增多個組別):</label>
+                    <div id="assembly-groups-container">
+                    </div>
+                    <button type="button" id="add-assembly-group" class="secondary" style="margin-top:10px; font-size:0.9em; padding: 8px 12px; width: auto; flex-grow: 0;">新增集合組別</button>
+                </div>
+
                 <div class="form-group"> <label for="dismissal-time">解散時間 (樣式：下午5:00):</label> <input type="time" id="dismissal-time" name="dismissal-time"> </div>
-                <div class="form-group"> <label for="assembly-point">集合地點:</label> <input type="text" id="assembly-point" name="assembly-point"> </div>
                 <div class="form-group"> <label for="dismissal-point">解散地點:</label> <input type="text" id="dismissal-point" name="dismissal-point"> </div>
                 <div class="form-group"> <label for="activity-location">活動地點:</label> <input type="text" id="activity-location" name="activity-location"> </div>
                 <div class="form-group"> <label for="affects-lessons">會否影響課堂:</label> <select id="affects-lessons" name="affects-lessons"> <option value="否">否</option> <option value="會">會</option> </select> </div>
@@ -379,7 +422,6 @@
                 <button type="button" id="export-inputs-excel">匯出目前輸入 (Excel)</button>
                 <label for="import-excel-input" class="file-input-label secondary">匯入已存輸入 (Excel)</label>
                 <input type="file" id="import-excel-input" class="file-input-hidden" accept=".xlsx">
-                <!-- <label for="attachments-input" class="file-input-label secondary">上載附件</label> -->
                 <input type="file" id="attachments-input" class="file-input-hidden" multiple accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,.xls,.xlsx">
                 <div id="attachment-names" style="font-size:0.9em; color:#555; width:100%; text-align:center; margin-top:5px;"></div>
                 <button type="button" id="download-original-template" class="secondary hidden">下載原始Excel範本</button>
@@ -390,7 +432,7 @@
     <div id="pdf-template-notice" class="pdf-page-render">
         <div style="position: relative; width: 100%; min-height: 20mm;"> 
             <img src="School logo.png" alt="School Logo" class="school-logo-img"/>
-            <div class="notice-top-right-container">家長通告 <span id="pdf-notice-num-header"></span> 號</div>
+            <div class="notice-top-right-container">家長通告 <span id="pdf-notice-num-header" class="underline-value" style="min-width:20mm;"></span> 號</div>
         </div>
         <div class="notice-main-header header">佛 教 何 南 金 中 學</div>
         <div class="notice-sub-header sub-header">學 生 活 動 通 知 家 長 信(PL1)</div>
@@ -401,8 +443,8 @@
         
         <div class="notice-closing-block">
             <div class="notice-date-principal-moved">
-                <span>日期：<span id="pdf-notice-issue-date-moved" class="underline-value" style="min-width:50mm;"></span></span>
-                <span class="principal-name" style="margin-left: auto;">馬寶紅校長：<span class="underline-value" style="min-width:35mm; margin-left:1mm;">&nbsp;</span></span>
+                <span>日期：<span id="pdf-notice-issue-date-moved" class="underline-value" style="min-width:40mm;"></span></span>
+                <span class="principal-name" style="margin-left: auto;">馬寶紅校長：<span class="underline-value" style="min-width:30mm; margin-left:1mm;">&nbsp;</span></span>
             </div>
             <div class="notice-school-name-right">佛 教 何 南 金 中 學</div>
         </div>
@@ -413,7 +455,7 @@
             <div class="notice-details-header">貴 子 弟 報 名 參 加 之 活 動 情 況 如 下 :-</div>
             <div class="notice-details-grid">
                 <span>活動名稱：</span><span id="pdf-activity-name"></span> 
-                <span>負責老師：</span><span id="pdf-responsible-teacher-detail"></span>
+                <span id="pdf-responsible-teacher-detail-label">負責老師：</span><span id="pdf-responsible-teacher-detail"></span>
                 <span>舉行地點：</span><span id="pdf-activity-location"></span> 
                 <span>舉行日期：</span><span id="pdf-activity-date"></span>
                 <span>集合時間：</span><span id="pdf-assembly-time"></span> 
@@ -425,7 +467,6 @@
                 <span class="label">備註：</span><span id="pdf-notice-remarks" class="value"></span>
             </div>
             <div class="notice-cost-info" id="pdf-notice-cost-info-container">
-                {/* Content dynamically inserted by JavaScript */}
             </div>
         </div>
         
@@ -434,20 +475,20 @@
             <div class="notice-teacher-signature-area">負責老師： <span id="pdf-responsible-teacher-sig" class="teacher-sig-line"></span></div>
         </div>
 
-        <div class="reply-slip-section-wrapper"> <!-- Wrapper for the entire reply slip section -->
+        <div class="reply-slip-section-wrapper"> 
             <div class="reply-slip-header">學 生 活 動 家 長 回 條</div>
             <div class="reply-slip-body">敬覆者：領悉家長通告第 <span id="pdf-notice-num-reply" class="underline-value" style="min-width:20mm;">&nbsp;</span> 號文內各節，茲 <span id="pdf-parent-choice-action" class="underline-value" style="min-width:30mm;">&nbsp;</span> 敝子弟參加</div>
             <div id="pdf-activity-name-reply" class="reply-slip-activity-name"></div>
             <div class="reply-slip-body">活動，並會提醒其於進行活動時應遵守各安全規則。本人明白無故缺席以致未能完成有關活動，學校有可能要求同學補付原價全費。此覆</div>
             <div class="reply-slip-school-right">佛教何南金中學</div>
             <div class="reply-slip-details-grid">
-                <span>學生姓名：</span><span></span>
+                <span>學生姓名：</span><span class="reply-underline-dynamic-container"><span class="reply-underline-dynamic">&nbsp;</span></span>
                 <span>學生班別及學號：</span>
                 <div><span class="class-no-span">&nbsp;</span>班 <span class="class-no-span">&nbsp;</span>號</div>
-                <span>家長 / 監護人簽署：</span><span></span>
-                <span>家長 / 監護人姓名：</span><span></span>
-                <span>家長 / 監護人電話：</span><span></span>
-                <span>日期：</span><span></span>
+                <span>家長 / 監護人簽署：</span><span class="reply-underline-dynamic-container"><span class="reply-underline-dynamic">&nbsp;</span></span>
+                <span>家長 / 監護人姓名：</span><span class="reply-underline-dynamic-container"><span class="reply-underline-dynamic">&nbsp;</span></span>
+                <span>家長 / 監護人電話：</span><span class="reply-underline-dynamic-container"><span class="reply-underline-dynamic">&nbsp;</span></span>
+                <span>日期：</span><span class="reply-underline-dynamic-container"><span class="reply-underline-dynamic">&nbsp;</span></span>
             </div>
         </div>
     </div>
@@ -656,7 +697,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             const advancedModeCheckbox = document.getElementById('advanced-mode-checkbox');
             const downloadOriginalBlankTemplateBtn = document.getElementById('download-original-template');
-            // const downloadPopulatedTemplateBtn = document.getElementById('download-populated-template'); // Removed
             const activityOriginalPriceGroup = document.getElementById('activity-original-price-group');
             const noticeTypeSelect = document.getElementById('notice-type');
             const parentOptionsGroup = document.getElementById('parent-options-group');
@@ -668,6 +708,8 @@
             const attachmentsInput = document.getElementById('attachments-input');
             const attachmentNamesDiv = document.getElementById('attachment-names');
             const loadingOverlay = document.getElementById('loading-overlay');
+            const addAssemblyGroupButton = document.getElementById('add-assembly-group');
+            const assemblyGroupsContainer = document.getElementById('assembly-groups-container');
             
             function showLoader() { if(loadingOverlay) loadingOverlay.classList.remove('hidden'); }
             function hideLoader() { if(loadingOverlay) loadingOverlay.classList.add('hidden'); }
@@ -675,7 +717,6 @@
             function toggleAdvancedMode() {
                 const isAdvanced = advancedModeCheckbox.checked;
                 downloadOriginalBlankTemplateBtn.classList.toggle('hidden', !isAdvanced);
-                // downloadPopulatedTemplateBtn.classList.toggle('hidden', !isAdvanced); // Removed
                 if (isAdvanced) { activityOriginalPriceGroup.classList.remove('hidden'); } 
                 else { toggleOriginalPriceVisibility(); }
             }
@@ -783,6 +824,36 @@
                 attachedFiles = Array.from(event.target.files);
                 attachmentNamesDiv.innerHTML = attachedFiles.length > 0 ? '已選附件：' + attachedFiles.map(f => f.name).join(', ') : '';
             });
+
+            let assemblyGroupCounter = 0;
+            function addAssemblyGroup(groupData = {}) {
+                assemblyGroupCounter++;
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'assembly-group-item';
+                groupDiv.innerHTML = `
+                    <div>
+                        <label for="assembly-group-name-${assemblyGroupCounter}">組別名稱 (選填)</label>
+                        <input type="text" id="assembly-group-name-${assemblyGroupCounter}" class="assembly-group-name" placeholder="例如：中五級" value="${groupData.groupName || ''}">
+                    </div>
+                    <div>
+                        <label for="assembly-group-time-${assemblyGroupCounter}">集合時間</label>
+                        <input type="time" id="assembly-group-time-${assemblyGroupCounter}" class="assembly-group-time" value="${groupData.time || ''}">
+                    </div>
+                    <div>
+                        <label for="assembly-group-point-${assemblyGroupCounter}">集合地點</label>
+                        <input type="text" id="assembly-group-point-${assemblyGroupCounter}" class="assembly-group-point" value="${groupData.point || ''}">
+                    </div>
+                    <button type="button" class="remove-assembly-group">移除此組別</button>
+                `;
+                assemblyGroupsContainer.appendChild(groupDiv);
+                groupDiv.querySelector('.remove-assembly-group').addEventListener('click', function() {
+                    this.closest('.assembly-group-item').remove();
+                });
+            }
+
+            addAssemblyGroupButton.addEventListener('click', () => addAssemblyGroup());
+            addAssemblyGroup(); // Add one by default
+
 
             toggleOriginalPriceVisibility(); toggleParentOptionsVisibility(); toggleExternalOrgDetailsVisibility(); toggleAdvancedMode(); 
 
@@ -1050,29 +1121,62 @@
                     return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`; 
                 } catch (e) { return ''; }
             }
-            function getFormTime(id) {
-                const val = getFormValue(id); if (!val) return '';
-                const [hours, minutes] = val.split(':'); if (hours === undefined || minutes === undefined) return '';
-                const H = parseInt(hours); if (isNaN(H)) return '';
-                const ampm = H >= 12 ? '下午' : '上午'; const displayH = H % 12 || 12;
+            function getFormTimeFromRaw(timeValue) { 
+                if (!timeValue) return '';
+                const [hours, minutes] = timeValue.split(':');
+                if (hours === undefined || minutes === undefined) return timeValue; 
+                const H = parseInt(hours);
+                if (isNaN(H)) return timeValue;
+                const ampm = H >= 12 ? '下午' : '上午';
+                const displayH = H % 12 || 12;
                 return `${ampm}${displayH}:${minutes.padStart(2, '0')}`;
             }
 
-            function setElementText(id, text) { const el = document.getElementById(id); if(el) el.innerText = text || ''; }
-            function setElementHtml(id, html) { const el = document.getElementById(id); if(el) el.innerHTML = html || ''; }
+            function setElementText(id, text) { 
+                const el = document.getElementById(id); 
+                if(el) el.innerText = text || '\u00A0';
+            }
+            function setElementHtml(id, html) { 
+                const el = document.getElementById(id); 
+                if(el) el.innerHTML = html || '\u00A0';
+            }
+
+            function getAssemblyGroupsData() {
+                const groups = [];
+                document.querySelectorAll('#assembly-groups-container .assembly-group-item').forEach(item => {
+                    groups.push({
+                        groupName: item.querySelector('.assembly-group-name').value,
+                        time: item.querySelector('.assembly-group-time').value,
+                        point: item.querySelector('.assembly-group-point').value
+                    });
+                });
+                return groups;
+            }
 
             function populateNoticeTemplate() {
                 setElementText('pdf-notice-num-header', getFormValue('notice-number'));
-                setElementText('pdf-notice-issue-date-moved', getFormDate('notice-issue-date') || ' ');
-                setElementText('pdf-activity-name', getFormValue('activity-name')|| ' ');
-                setElementText('pdf-responsible-teacher-detail', getFormValue('responsible-teacher')|| ' ');
-                setElementText('pdf-activity-location', getFormValue('activity-location')|| ' ');
-                setElementText('pdf-activity-date', getFormDate('activity-date')|| ' ');
-                setElementText('pdf-assembly-time', getFormTime('assembly-time')|| ' ');
-                setElementText('pdf-assembly-point', getFormValue('assembly-point')|| ' ');
-                setElementText('pdf-dismissal-time', getFormTime('dismissal-time')|| ' ');
-                setElementText('pdf-dismissal-point', getFormValue('dismissal-point')|| ' ');
-                setElementText('pdf-notice-remarks', getFormValue('notice-remarks') || ' '); 
+                setElementText('pdf-notice-issue-date-moved', getFormDate('notice-issue-date'));
+                setElementText('pdf-activity-name', getFormValue('activity-name'));
+                
+                setElementText('pdf-activity-location', getFormValue('activity-location'));
+                setElementText('pdf-activity-date', getFormDate('activity-date'));
+
+                const assemblyGroups = getAssemblyGroupsData();
+                let timeHtml = '';
+                let pointHtml = '';
+                if (assemblyGroups.length > 0 && (assemblyGroups[0].time || assemblyGroups[0].point) ) { // only populate if there's actual data
+                    assemblyGroups.forEach(group => {
+                        const groupLabel = group.groupName ? `${group.groupName}: ` : '';
+                        if (group.time) timeHtml += `<div>${groupLabel}${getFormTimeFromRaw(group.time) || '\u00A0'}</div>`;
+                        if (group.point) pointHtml += `<div>${groupLabel}${group.point || '\u00A0'}</div>`;
+                    });
+                }
+                setElementHtml('pdf-assembly-time', timeHtml || '<div>\u00A0</div>');
+                setElementHtml('pdf-assembly-point', pointHtml || '<div>\u00A0</div>');
+                
+                setElementText('pdf-dismissal-time', getFormTimeFromRaw(getFormValue('dismissal-time')));
+                setElementText('pdf-dismissal-point', getFormValue('dismissal-point'));
+                setElementText('pdf-notice-remarks', getFormValue('notice-remarks')); 
                 
                 const originalPrice = getFormValue('activity-original-price') || '0'; 
                 const numPrice = parseFloat(originalPrice);
@@ -1086,16 +1190,64 @@
                         costInfoEl.innerHTML = `是項活動費用為每位港幣 $${formattedPrice}，經學校及其他津貼現無需收取費用。`; 
                     }
                 }
-                setElementText('pdf-responsible-teacher-sig', getFormValue('responsible-teacher')|| ' ');
-                setElementText('pdf-notice-num-reply', getFormValue('notice-number') ? getFormValue('notice-number') : " ");
-                setElementText('pdf-activity-name-reply', getFormValue('activity-name') || " ");
+
+                setElementText('pdf-notice-num-reply', getFormValue('notice-number'));
+                setElementHtml('pdf-activity-name-reply', getFormValue('activity-name'));
                 let parentChoice = "批准 / 不批准";
                 if (getFormValue('needs-parent-options') === '是') {
                     const optionContent = getFormValue('parent-options-content');
-                    if (optionContent === '其他') { parentChoice = getFormValue('parent-options-other') || " "; } 
+                    if (optionContent === '其他') { parentChoice = getFormValue('parent-options-other') || "\u00A0"; } 
                     else { parentChoice = optionContent; }
                 }
                 setElementText('pdf-parent-choice-action', parentChoice);
+
+                const responsibleTeacherName = getFormValue('responsible-teacher');
+                const teacherDetailSpan = document.getElementById('pdf-responsible-teacher-detail');
+                const teacherDetailLabelSpan = document.getElementById('pdf-responsible-teacher-detail-label');
+                const teacherSigElement = document.getElementById('pdf-responsible-teacher-sig');
+                const teacherSigAreaContainer = teacherSigElement ? teacherSigElement.closest('.notice-teacher-signature-area') : null;
+
+                if (!responsibleTeacherName || responsibleTeacherName.trim() === '') {
+                    if (teacherDetailSpan) {
+                        teacherDetailSpan.innerHTML = '\u00A0'; 
+                        teacherDetailSpan.style.borderBottom = '0.5px solid black'; 
+                        teacherDetailSpan.style.display = ''; 
+                    }
+                    if (teacherDetailLabelSpan) {
+                         teacherDetailLabelSpan.style.display = 'none'; 
+                    }
+                     if (teacherDetailSpan) teacherDetailSpan.style.display = 'none';
+
+
+                    if (teacherSigAreaContainer) {
+                        teacherSigAreaContainer.style.display = 'none';
+                    }
+                } else {
+                    if (teacherDetailSpan) {
+                        setElementText('pdf-responsible-teacher-detail', responsibleTeacherName);
+                        teacherDetailSpan.style.display = ''; 
+                        teacherDetailSpan.style.borderBottom = '0.5px solid black'; 
+                    }
+                    if (teacherDetailLabelSpan) {
+                        teacherDetailLabelSpan.innerText = '負責老師：';
+                        teacherDetailLabelSpan.style.display = '';
+                    }
+                    if (teacherSigAreaContainer) {
+                        teacherSigAreaContainer.style.display = '';
+                    }
+                    setElementText('pdf-responsible-teacher-sig', responsibleTeacherName);
+                }
+                if (responsibleTeacherName && responsibleTeacherName.trim() !== '') {
+                     setElementText('pdf-responsible-teacher-sig', responsibleTeacherName);
+                } else if (teacherSigElement){ 
+                     teacherSigElement.innerHTML = '&nbsp;';
+                }
+
+
+                document.querySelectorAll('#pdf-template-notice .reply-slip-details-grid .reply-underline-dynamic').forEach(span => {
+                    span.innerHTML = '&nbsp;'; 
+                });
+
             }
 
             function populateENoticeTemplate() {
@@ -1129,8 +1281,8 @@
                 setElementText('pdf-ext-data-attachment-tick', dataSource === '見附件' ? '✓' : '\u00A0\u00A0');
                 setElementText('pdf-ext-data-below-tick', dataSource === '見以下資料' ? '✓' : '\u00A0\u00A0');
                 if (detailsContentEl) {
-                    if (dataSource === '見以下資料') { detailsContentEl.innerText = getFormValue('external-org-details'); detailsContentEl.style.display = 'block'; } 
-                    else { detailsContentEl.innerText = ''; detailsContentEl.style.display = 'none'; }
+                    if (dataSource === '見以下資料') { detailsContentEl.innerText = getFormValue('external-org-details') || '\u00A0'; detailsContentEl.style.display = 'block'; } 
+                    else { detailsContentEl.innerText = '\u00A0'; detailsContentEl.style.display = 'none'; }
                 }
             }
 
@@ -1204,7 +1356,29 @@
             }
             
             document.getElementById('export-inputs-excel').addEventListener('click', function() {
-                const data = [ ["欄位", "內容"], ["負責科/組/會社", getFormValue('responsible-dept')], ["活動名稱", getFormValue('activity-name')], ["負責老師", getFormValue('responsible-teacher')], ["負責老師職位", getFormValue('responsible-teacher-position')], ["領隊老師", getFormValue('leading-teacher')], ["主辦/合作機構", getFormValue('organizer')], ["活動日期", getFormValue('activity-date')], ["活動時間", getFormValue('activity-time')], ["活動時數", getFormValue('activity-duration')], ["集合時間", getFormValue('assembly-time')], ["解散時間", getFormValue('dismissal-time')], ["集合地點", getFormValue('assembly-point')], ["解散地點", getFormValue('dismissal-point')], ["活動地點", getFormValue('activity-location')], ["會否影響課堂", getFormValue('affects-lessons')], ["活動範圍", getFormValue('activity-scope')], ["活動規模", getFormValue('activity-scale')], ["活動類別1", document.querySelectorAll('input[name="activity-category"]:checked')[0]?.value || ''], ["活動類別2", document.querySelectorAll('input[name="activity-category"]:checked')[1]?.value || ''], ["活動類別3", document.querySelectorAll('input[name="activity-category"]:checked')[2]?.value || ''], ["是否需要輸入SLP", getFormValue('needs-slp')], ["會否涉及校外機構或人士", getFormValue('involves-external')], ["通告編號", getFormValue('notice-number')], ["通告類別", getFormValue('notice-type')], ["活動原價（$）", getFormValue('activity-original-price')], ["擬發出通告日期", getFormValue('notice-issue-date')], ["結束電子通告日期", getFormValue('e-notice-end-date')], ["通告對象", getFormValue('notice-target')], ["是否需要提供家長選項", getFormValue('needs-parent-options')], ["家長的選項內容", getFormValue('parent-options-content')], ["家長選項其他", getFormValue('parent-options-other')], ["通告備註", getFormValue('notice-remarks')], ["外間組織/人士的資料提供方式", getFormValue('external-org-data-source')], ["外間組織/人士的資料", getFormValue('external-org-details')],];
+                const data = [ ["欄位", "內容"], 
+                    ["負責科/組/會社", getFormValue('responsible-dept')], ["活動名稱", getFormValue('activity-name')], 
+                    ["負責老師", getFormValue('responsible-teacher')], ["負責老師職位", getFormValue('responsible-teacher-position')], 
+                    ["領隊老師", getFormValue('leading-teacher')], ["主辦/合作機構", getFormValue('organizer')], 
+                    ["活動日期", getFormValue('activity-date')], ["活動時間", getFormValue('activity-time')], 
+                    ["活動時數", getFormValue('activity-duration')], 
+                    // ["集合時間", getFormValue('assembly-time')], // Removed old single fields
+                    // ["集合地點", getFormValue('assembly-point')], // Removed old single fields
+                    ["集合安排", JSON.stringify(getAssemblyGroupsData())], // Added new combined field
+                    ["解散時間", getFormValue('dismissal-time')], ["解散地點", getFormValue('dismissal-point')], 
+                    ["活動地點", getFormValue('activity-location')], ["會否影響課堂", getFormValue('affects-lessons')], 
+                    ["活動範圍", getFormValue('activity-scope')], ["活動規模", getFormValue('activity-scale')], 
+                    ["活動類別1", document.querySelectorAll('input[name="activity-category"]:checked')[0]?.value || ''], 
+                    ["活動類別2", document.querySelectorAll('input[name="activity-category"]:checked')[1]?.value || ''], 
+                    ["活動類別3", document.querySelectorAll('input[name="activity-category"]:checked')[2]?.value || ''], 
+                    ["是否需要輸入SLP", getFormValue('needs-slp')], ["會否涉及校外機構或人士", getFormValue('involves-external')], 
+                    ["通告編號", getFormValue('notice-number')], ["通告類別", getFormValue('notice-type')], 
+                    ["活動原價（$）", getFormValue('activity-original-price')], ["擬發出通告日期", getFormValue('notice-issue-date')], 
+                    ["結束電子通告日期", getFormValue('e-notice-end-date')], ["通告對象", getFormValue('notice-target')], 
+                    ["是否需要提供家長選項", getFormValue('needs-parent-options')], ["家長的選項內容", getFormValue('parent-options-content')], 
+                    ["家長選項其他", getFormValue('parent-options-other')], ["通告備註", getFormValue('notice-remarks')], 
+                    ["外間組織/人士的資料提供方式", getFormValue('external-org-data-source')], ["外間組織/人士的資料", getFormValue('external-org-details')],
+                ];
                 const interSchoolComp = []; document.querySelectorAll('input[name="inter-school-competition"]').forEach(cb => { if (cb.type === 'checkbox') interSchoolComp.push(`${cb.value}:${cb.checked}`); else if (cb.type === 'text') interSchoolComp.push(`other_text:${cb.value}`); });
                 data.push(["全港性校際比賽", interSchoolComp.join(',')]);
                 const valueEducation = Array.from(document.querySelectorAll('input[name="value-education"]:checked')).map(cb => cb.value).join(','); data.push(["活動包含價值教育", valueEducation]);
@@ -1225,7 +1399,26 @@
                         const jsonData = XLSX.utils.sheet_to_json(worksheet, {header: 1}); const formData = {};
                         jsonData.slice(1).forEach(row => { if(row[0] && row[1] !== undefined) formData[row[0]] = row[1];});
                         function setFormValue(id, value) { if(document.getElementById(id) && value !== undefined && value !== null) document.getElementById(id).value = value; }
-                        setFormValue('responsible-dept', formData['負責科/組/會社']); setFormValue('activity-name', formData['活動名稱']); setFormValue('responsible-teacher', formData['負責老師']); setFormValue('responsible-teacher-position', formData['負責老師職位']); setFormValue('leading-teacher', formData['領隊老師']); setFormValue('organizer', formData['主辦/合作機構']); setFormValue('activity-date', formData['活動日期']); setFormValue('activity-time', formData['活動時間']); setFormValue('activity-duration', formData['活動時數']); setFormValue('assembly-time', formData['集合時間']); setFormValue('dismissal-time', formData['解散時間']); setFormValue('assembly-point', formData['集合地點']); setFormValue('dismissal-point', formData['解散地點']); setFormValue('activity-location', formData['活動地點']); setFormValue('affects-lessons', formData['會否影響課堂']); setFormValue('activity-scope', formData['活動範圍']); setFormValue('activity-scale', formData['活動規模']);
+                        setFormValue('responsible-dept', formData['負責科/組/會社']); setFormValue('activity-name', formData['活動名稱']); setFormValue('responsible-teacher', formData['負責老師']); setFormValue('responsible-teacher-position', formData['負責老師職位']); setFormValue('leading-teacher', formData['領隊老師']); setFormValue('organizer', formData['主辦/合作機構']); setFormValue('activity-date', formData['活動日期']); setFormValue('activity-time', formData['活動時間']); setFormValue('activity-duration', formData['活動時數']); 
+                        // setFormValue('assembly-time', formData['集合時間']); // Removed
+                        // setFormValue('assembly-point', formData['集合地點']); // Removed
+                        setFormValue('dismissal-time', formData['解散時間']); setFormValue('dismissal-point', formData['解散地點']); 
+                        setFormValue('activity-location', formData['活動地點']); setFormValue('affects-lessons', formData['會否影響課堂']); setFormValue('activity-scope', formData['活動範圍']); setFormValue('activity-scale', formData['活動規模']);
+                        
+                        assemblyGroupsContainer.innerHTML = ''; // Clear existing UI for assembly groups
+                        assemblyGroupCounter = 0;
+                        if (formData['集合安排']) {
+                            try {
+                                const importedAssemblyGroups = JSON.parse(formData['集合安排']);
+                                if (Array.isArray(importedAssemblyGroups)) {
+                                    importedAssemblyGroups.forEach(group => addAssemblyGroup(group));
+                                }
+                            } catch (e) { console.error("Error parsing 集合安排 from Excel:", e); addAssemblyGroup(); /* Add a default one if parsing fails */ }
+                        } else {
+                            addAssemblyGroup(); // Add a default one if not in Excel
+                        }
+
+
                         document.querySelectorAll('input[name="activity-category"]').forEach(cb => cb.checked = false);
                         const cat1 = formData['活動類別1']; if(cat1) { const cb = document.querySelector(`input[name="activity-category"][value="${cat1}"]`); if(cb) cb.checked = true; }
                         const cat2 = formData['活動類別2']; if(cat2) { const cb = document.querySelector(`input[name="activity-category"][value="${cat2}"]`); if(cb) cb.checked = true; }
