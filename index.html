@@ -909,7 +909,7 @@
             addActivityDateEntryUI(); 
 
             studentListHelpBtn.addEventListener('click', () => {
-                alert("學生名單 Excel/CSV 檔案格式說明：\n\n檔案應包含以下欄位標題 (大小楷不限，次序不限):\n- 班別 (或 class)\n- 學號 (或 no, number, .no)\n- 姓名 (或 name, student name, student, 學生)\n- 活動角色 (或 role) (選填，預設為 \"參加者\")\n\n第一行為標題行，之後每行為一名學生資料。");
+                alert("學生名單 Excel/CSV 檔案格式說明：\n\n檔案應包含以下欄位標題 (大小楷不限，次序不限):\n- 班別 (或 class)\n- 學號 (或 no, number, no.)\n- 姓名 (或 name, student name, student, 學生)\n- 活動角色 (或 role) (選填，預設為 \"參加者\")\n\n第一行為標題行，之後每行為一名學生資料。");
             });
             
             downloadPostActivityStudentListBtn.addEventListener('click', function() {
@@ -1680,7 +1680,7 @@
 
                         headers.forEach((header, index) => {
                             if (["class", "班別"].includes(header)) colMap.class = index;
-                            else if (["no", "number", ".no", "學號"].includes(header)) colMap.no = index;
+                            else if (["no", "number", "no.", "學號"].includes(header)) colMap.no = index;
                             else if (["name", "student name", "姓名", "student", "學生"].includes(header)) colMap.name = index;
                             else if (["role", "活動角色"].includes(header)) colMap.role = index;
                         });
