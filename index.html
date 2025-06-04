@@ -180,7 +180,9 @@
              width: 100%; 
         }
         #pdf-template-notice .notice-details-grid > span > div { min-height: 1.35em; } /* For multi-line assembly */
-
+        #pdf-template-notice .notice-details-grid #pdf-activity-date {
+            display: block; /* Ensure it can contain block children if using divs */
+        }
 
         #pdf-template-notice .notice-remarks-container { 
             margin-top: 1.5mm !important; 
@@ -283,7 +285,7 @@
         #pdf-template-slp-form .slp-value-scope-item { margin-bottom: 0.6mm; white-space: nowrap;}
         #pdf-template-slp-form .slp-student-table { margin-top: 1.8mm; font-size: 8pt;}
         #pdf-template-slp-form .slp-student-table th, #pdf-template-slp-form .slp-student-table td { padding: 0.7mm 1mm; border: 0.5px solid #333; text-align: center;}
-        #pdf-template-slp-form .slp-student-table td:nth-child(1) {width: 5mm;} 
+        #pdf-template-slp-form .slp-student-table td:nth-child(1) {width: 8mm;} /* Adjusted for issue 6 */
         #pdf-template-slp-form .slp-student-table td:nth-child(2) {width: 11mm;} 
         #pdf-template-slp-form .slp-student-table td:nth-child(3) {width: 11mm;} 
         #pdf-template-slp-form .slp-student-table td:nth-child(4) { text-align: left; width: auto;} 
@@ -294,6 +296,8 @@
         #pdf-template-slp-form .slp-signatures { margin-top: 4mm; display: flex; justify-content: space-between; font-size: 9.5pt;}
         #pdf-template-slp-form .slp-signature-item { min-width: 38mm; white-space: nowrap; display:flex; align-items: baseline; } 
         #pdf-template-slp-form .slp-signature-item .signature-line {width: 50%; margin-left: 2mm;}
+        #pdf-template-slp-form #pdf-slp-activity-date span { display: block; margin-bottom: 0.3mm; } /* Style for multi-line dates */
+
 
         #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 9999; display: flex; justify-content: center; align-items: center;}
         .loading-spinner { border: 6px solid #f3f3f3; border-top: 6px solid #3498db; border-radius: 50%; width: 50px; height: 50px; animation: spin 0.8s linear infinite; }
@@ -329,9 +333,13 @@
             padding: 6px 10px;
             font-size: 0.8em;
             background-color: #e74c3c;
-            align-self: center; /* Align button vertically */
-            margin-top: 18px; /* Approximate alignment with input fields that have labels */
+            align-self: center; 
+            margin-top: 18px; 
         }
+        .activity-date-entry {
+            border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 4px; background-color: #fdfdfd;
+        }
+        .activity-date-entry .form-group { margin-bottom:0 !important; } /* Override default form-group margin */
 
 
         @media (max-width: 768px) {
@@ -340,11 +348,14 @@
             button, .file-input-label { font-size: 0.95em; padding: 10px 15px;}
             .container { padding: 15px; }
             .assembly-group-item {
-                grid-template-columns: 1fr; /* Stack on smaller screens */
+                grid-template-columns: 1fr; 
             }
             .assembly-group-item button {
-                margin-top: 5px; /* Adjust margin when stacked */
+                margin-top: 5px; 
             }
+            .activity-date-entry > div { flex-direction: column; align-items: stretch !important; }
+            .activity-date-entry .form-group { min-width: unset !important; width: 100%; margin-bottom: 10px !important; }
+            .activity-date-entry button.remove-activity-date-entry { align-self: flex-start !important; margin-top: 5px; }
         }
     </style>
 </head>
@@ -361,13 +372,17 @@
             <div class="form-grid">
                 <div class="form-group"> <label for="responsible-dept">負責科/組/會社:</label> <input type="text" id="responsible-dept" name="responsible-dept"> </div>
                 <div class="form-group"> <label for="activity-name">活動名稱:</label> <input type="text" id="activity-name" name="activity-name"> </div>
-                <div class="form-group"> <label for="responsible-teacher">負責老師:</label> <input type="text" id="responsible-teacher" name="responsible-teacher"> </div>
+                <div class="form-group"> <label for="responsible-teacher">負責老師:</label> <input type="text" id="responsible-teacher" name="responsible-teacher" required> </div>
                 <div class="form-group"> <label for="responsible-teacher-position">負責老師職位:</label> <select id="responsible-teacher-position" name="responsible-teacher-position"> <option value="CM">CM</option> <option value="GM">GM</option> <option value="SGM">SGM</option> <option value="PGM">PGM</option> </select> </div>
                 <div class="form-group"> <label for="leading-teacher">領隊老師 (樣式：陳小明):</label> <input type="text" id="leading-teacher" name="leading-teacher"> </div>
                 <div class="form-group"> <label for="organizer">主辦/合作機構:</label> <input type="text" id="organizer" name="organizer"> </div>
-                <div class="form-group"> <label for="activity-date">活動日期 (樣式：2023年9月1日):</label> <input type="date" id="activity-date" name="activity-date"> </div>
-                <div class="form-group"> <label for="activity-time">活動時間 (樣式：上午9:00至下午5:00):</label> <input type="text" id="activity-time" name="activity-time"> </div>
-                <div class="form-group"> <label for="activity-duration">活動時數 (樣式：8小時):</label> <input type="text" id="activity-duration" name="activity-duration"> </div>
+                
+                <div class="form-group form-group-span-2">
+                    <label>活動日期/期間 (可新增多個):</label>
+                    <div id="activity-dates-container">
+                    </div>
+                    <button type="button" id="add-activity-date-entry" class="secondary" style="margin-top:10px; font-size:0.9em; padding: 8px 12px; width: auto; flex-grow: 0;">新增日期/期間</button>
+                </div>
                 
                 <div class="form-group form-group-span-2"> 
                     <label style="font-weight:bold; color: #333; margin-bottom: 8px;">集合安排 (可新增多個組別):</label>
@@ -376,7 +391,7 @@
                     <button type="button" id="add-assembly-group" class="secondary" style="margin-top:10px; font-size:0.9em; padding: 8px 12px; width: auto; flex-grow: 0;">新增集合組別</button>
                 </div>
 
-                <div class="form-group"> <label for="dismissal-time">解散時間 (樣式：下午5:00):</label> <input type="time" id="dismissal-time" name="dismissal-time"> </div>
+                <div class="form-group"> <label for="dismissal-time">解散時間:</label> <input type="time" id="dismissal-time" name="dismissal-time"> </div>
                 <div class="form-group"> <label for="dismissal-point">解散地點:</label> <input type="text" id="dismissal-point" name="dismissal-point"> </div>
                 <div class="form-group"> <label for="activity-location">活動地點:</label> <input type="text" id="activity-location" name="activity-location"> </div>
                 <div class="form-group"> <label for="affects-lessons">會否影響課堂:</label> <select id="affects-lessons" name="affects-lessons"> <option value="否">否</option> <option value="會">會</option> </select> </div>
@@ -411,10 +426,12 @@
                 <thead> <tr> <th>序號</th> <th>班別</th> <th>學號</th> <th>姓名</th> <th>活動角色</th> <th>操作</th> </tr> </thead>
                 <tbody id="student-list-tbody"></tbody>
             </table>
-            <div style="margin-top:10px; display:flex; gap:10px; justify-content: flex-start;">
+            <div style="margin-top:10px; display:flex; flex-wrap: wrap; gap:10px; justify-content: flex-start; align-items: center;">
                 <button type="button" id="add-student-row" class="secondary" style="font-size:0.9em; padding: 8px 12px;">新增學生</button>
                 <label for="import-student-list-input" class="file-input-label secondary" style="font-size:0.9em; padding: 8px 12px;">匯入學生名單 (Excel/CSV)</label>
                 <input type="file" id="import-student-list-input" class="file-input-hidden" accept=".xlsx,.csv">
+                <button type="button" id="student-list-help-btn" style="padding: 8px 10px; background-color: #5dade2; border: none; color: white; border-radius: 4px; cursor: pointer; font-size:0.9em;">上載格式要求</button>
+                <button type="button" id="download-post-activity-student-list" class="secondary" style="font-size:0.9em; padding: 8px 12px; background-color: #27ae60;">下載活動後學生名單 (Excel)</button>
             </div>
 
             <div class="button-group">
@@ -710,6 +727,10 @@
             const loadingOverlay = document.getElementById('loading-overlay');
             const addAssemblyGroupButton = document.getElementById('add-assembly-group');
             const assemblyGroupsContainer = document.getElementById('assembly-groups-container');
+            const addActivityDateEntryButton = document.getElementById('add-activity-date-entry');
+            const activityDatesContainer = document.getElementById('activity-dates-container');
+            const studentListHelpBtn = document.getElementById('student-list-help-btn');
+            const downloadPostActivityStudentListBtn = document.getElementById('download-post-activity-student-list');
             
             function showLoader() { if(loadingOverlay) loadingOverlay.classList.remove('hidden'); }
             function hideLoader() { if(loadingOverlay) loadingOverlay.classList.add('hidden'); }
@@ -852,12 +873,91 @@
             }
 
             addAssemblyGroupButton.addEventListener('click', () => addAssemblyGroup());
-            addAssemblyGroup(); // Add one by default
+            addAssemblyGroup(); 
+
+            let activityDateEntryCounter = 0;
+            function addActivityDateEntryUI(entryData = {}) {
+                activityDateEntryCounter++;
+                const entryDiv = document.createElement('div');
+                entryDiv.className = 'activity-date-entry';
+                entryDiv.innerHTML = `
+                    <div style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+                        <div class="form-group" style="min-width: 180px;"> <label for="activity-date-start-${activityDateEntryCounter}">開始日期:</label> <input type="date" id="activity-date-start-${activityDateEntryCounter}" class="activity-date-start" value="${entryData.startDate || ''}"> </div>
+                        <div class="form-group" style="min-width: 220px;"> <label for="activity-date-end-${activityDateEntryCounter}">結束日期 (如為單日則留空):</label> <input type="date" id="activity-date-end-${activityDateEntryCounter}" class="activity-date-end" value="${entryData.endDate || ''}"> </div>
+                        <div class="form-group" style="flex-grow:1; min-width: 200px;"> <label for="activity-date-type-${activityDateEntryCounter}">活動註記 (選填):</label> <input type="text" id="activity-date-type-${activityDateEntryCounter}" class="activity-date-type" placeholder="例：培訓、比賽日" value="${entryData.type || ''}"> </div>
+                        <button type="button" class="remove-activity-date-entry" style="padding: 9px 12px; background-color: #e74c3c; color:white; border:none; border-radius:4px; cursor:pointer; height: fit-content;">移除</button>
+                    </div>
+                `;
+                activityDatesContainer.appendChild(entryDiv);
+                entryDiv.querySelector('.remove-activity-date-entry').addEventListener('click', function() {
+                    this.closest('.activity-date-entry').remove();
+                });
+
+                const startDateInput = entryDiv.querySelector('.activity-date-start');
+                const endDateInput = entryDiv.querySelector('.activity-date-end');
+                function validateDates() {
+                    if (startDateInput.value && endDateInput.value && endDateInput.value < startDateInput.value) {
+                        alert('結束日期不能早於開始日期。');
+                        endDateInput.value = startDateInput.value;
+                    }
+                }
+                startDateInput.addEventListener('change', validateDates);
+                endDateInput.addEventListener('change', validateDates);
+            }
+
+            addActivityDateEntryButton.addEventListener('click', () => addActivityDateEntryUI());
+            addActivityDateEntryUI(); 
+
+            studentListHelpBtn.addEventListener('click', () => {
+                alert("學生名單 Excel/CSV 檔案格式說明：\n\n檔案應包含以下欄位標題 (大小楷不限，次序不限):\n- 班別 (或 class)\n- 學號 (或 no, number, .no)\n- 姓名 (或 name, student name, student, 學生)\n- 活動角色 (或 role) (選填，預設為 \"參加者\")\n\n第一行為標題行，之後每行為一名學生資料。");
+            });
+            
+            downloadPostActivityStudentListBtn.addEventListener('click', function() {
+                const studentDataForExcel = [
+                    ["序號", "班別", "學號", "姓名(中文)", "姓名(英文)", "性別", "角色"]
+                ];
+                const studentRows = studentListTbody.querySelectorAll('tr');
+                studentRows.forEach((row, index) => {
+                    const studentClass = row.querySelector('.student-class').value;
+                    const studentId = row.querySelector('.student-id').value;
+                    const studentName = row.querySelector('.student-name').value;
+                    const roleSelect = row.querySelector('.student-role');
+                    const roleOtherInput = row.querySelector('.student-role-other');
+                    let role = roleSelect.value;
+                    if (role === '其他') {
+                        role = roleOtherInput.value || '其他';
+                    }
+                    studentDataForExcel.push([
+                        index + 1,
+                        studentClass,
+                        studentId,
+                        studentName,
+                        "", // 姓名(英文) - leave blank
+                        "", // 性別 - leave blank
+                        role
+                    ]);
+                });
+
+                if (studentDataForExcel.length <= 1) {
+                    alert("沒有學生資料可供下載。");
+                    return;
+                }
+
+                const wb = XLSX.utils.book_new();
+                const ws = XLSX.utils.aoa_to_sheet(studentDataForExcel);
+                XLSX.utils.book_append_sheet(wb, ws, "學生名單");
+                XLSX.writeFile(wb, "活動後學生名單.xlsx");
+            });
 
 
             toggleOriginalPriceVisibility(); toggleParentOptionsVisibility(); toggleExternalOrgDetailsVisibility(); toggleAdvancedMode(); 
 
             async function generatePdf() {
+                if (!getFormValue('responsible-teacher').trim()) {
+                    alert('請填寫負責老師。');
+                    document.getElementById('responsible-teacher').focus();
+                    return;
+                }
                 showLoader();
                 await new Promise(resolve => setTimeout(resolve, 100)); 
 
@@ -1110,16 +1210,21 @@
             document.getElementById('generate-pdf-main').addEventListener('click', () => generatePdf());
             
             function getFormValue(id) { return document.getElementById(id) ? document.getElementById(id).value : ''; }
-            function getFormDate(id, excelFormat = false) { 
+            function getFormDate(id) { 
                 const val = getFormValue(id); if (!val) return '';
                 try { 
                     const date = new Date(val); 
                     if (isNaN(date.getTime())) return ''; 
-                    if (excelFormat) { 
-                         return val; 
-                    }
                     return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`; 
                 } catch (e) { return ''; }
+            }
+            function formatSingleDateForPDF(dateStr) {
+                if (!dateStr) return '\u00A0';
+                try {
+                    const date = new Date(dateStr);
+                    if (isNaN(date.getTime())) return '\u00A0';
+                    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+                } catch (e) { return '\u00A0'; }
             }
             function getFormTimeFromRaw(timeValue) { 
                 if (!timeValue) return '';
@@ -1141,6 +1246,92 @@
                 if(el) el.innerHTML = html || '\u00A0';
             }
 
+            function getActivityDatesData() {
+                const dates = [];
+                document.querySelectorAll('#activity-dates-container .activity-date-entry').forEach(entryEl => {
+                    const startDate = entryEl.querySelector('.activity-date-start').value;
+                    const endDate = entryEl.querySelector('.activity-date-end').value;
+                    const type = entryEl.querySelector('.activity-date-type').value;
+                    if (startDate) { 
+                        dates.push({ startDate, endDate: endDate || startDate, type });
+                    }
+                });
+                return dates;
+            }
+            
+            function formatActivityDateEntryForDisplay(entry) {
+                if (!entry || !entry.startDate) return '';
+                const start = new Date(entry.startDate);
+                const end = entry.endDate ? new Date(entry.endDate) : start;
+                let dateStr = `${start.getFullYear()}年${start.getMonth() + 1}月${start.getDate()}日`;
+                if (entry.endDate && entry.startDate !== entry.endDate) {
+                    dateStr += ` 至 ${end.getFullYear()}年${end.getMonth() + 1}月${end.getDate()}日`;
+                }
+                if (entry.type) {
+                    dateStr += ` (${entry.type})`;
+                }
+                return dateStr;
+            }
+
+            function calculateActivityDetails() {
+                const activityDates = getActivityDatesData();
+                const assemblyGroups = getAssemblyGroupsData();
+                const dismissalTimeValue = getFormValue('dismissal-time');
+                let displayTime = "N/A";
+                let displayDuration = "N/A";
+                let durationUnit = "";
+
+                if (activityDates.length === 0) {
+                    return { displayTime, displayDuration, durationUnit };
+                }
+
+                if (activityDates.length === 1) {
+                    const entry = activityDates[0];
+                    const startDate = new Date(entry.startDate + "T00:00:00");
+                    const endDate = new Date(entry.endDate + "T00:00:00");
+
+                    if (startDate.getTime() === endDate.getTime()) { // Single day
+                        let earliestAssemblyTime = null;
+                        assemblyGroups.forEach(group => {
+                            if (group.time) {
+                                if (!earliestAssemblyTime || group.time < earliestAssemblyTime) {
+                                    earliestAssemblyTime = group.time;
+                                }
+                            }
+                        });
+
+                        if (earliestAssemblyTime && dismissalTimeValue) {
+                            const assemblyDateTime = new Date(`${entry.startDate}T${earliestAssemblyTime}`);
+                            const dismissalDateTime = new Date(`${entry.startDate}T${dismissalTimeValue}`);
+                            if (dismissalDateTime > assemblyDateTime) {
+                                const durationMs = dismissalDateTime - assemblyDateTime;
+                                const durationHours = durationMs / (1000 * 60 * 60);
+                                displayDuration = `${durationHours.toFixed(1)}`;
+                                durationUnit = "小時";
+                                displayTime = `${getFormTimeFromRaw(earliestAssemblyTime)}至${getFormTimeFromRaw(dismissalTimeValue)}`;
+                            }
+                        }
+                    } else { // Date range
+                        const diffTime = Math.abs(endDate - startDate);
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                        displayDuration = `${diffDays}`;
+                        durationUnit = "天";
+                    }
+                } else { // Multiple entries/ranges
+                    let totalDays = 0;
+                    activityDates.forEach(entry => {
+                        const startDate = new Date(entry.startDate + "T00:00:00");
+                        const endDate = new Date(entry.endDate + "T00:00:00");
+                        const diffTime = Math.abs(endDate - startDate);
+                        totalDays += Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                    });
+                    displayDuration = `${totalDays}`;
+                    durationUnit = "天";
+                }
+                return { displayTime, displayDuration, durationUnit };
+            }
+
+
             function getAssemblyGroupsData() {
                 const groups = [];
                 document.querySelectorAll('#assembly-groups-container .assembly-group-item').forEach(item => {
@@ -1157,14 +1348,17 @@
                 setElementText('pdf-notice-num-header', getFormValue('notice-number'));
                 setElementText('pdf-notice-issue-date-moved', getFormDate('notice-issue-date'));
                 setElementText('pdf-activity-name', getFormValue('activity-name'));
-                
                 setElementText('pdf-activity-location', getFormValue('activity-location'));
-                setElementText('pdf-activity-date', getFormDate('activity-date'));
+
+                const activityDates = getActivityDatesData();
+                const activityDateHtml = activityDates.map(entry => `<div>${formatActivityDateEntryForDisplay(entry) || '\u00A0'}</div>`).join('');
+                setElementHtml('pdf-activity-date', activityDateHtml || '<div>\u00A0</div>');
+                
 
                 const assemblyGroups = getAssemblyGroupsData();
                 let timeHtml = '';
                 let pointHtml = '';
-                if (assemblyGroups.length > 0 && (assemblyGroups[0].time || assemblyGroups[0].point) ) { // only populate if there's actual data
+                if (assemblyGroups.length > 0 && assemblyGroups.some(g => g.time || g.point)) {
                     assemblyGroups.forEach(group => {
                         const groupLabel = group.groupName ? `${group.groupName}: ` : '';
                         if (group.time) timeHtml += `<div>${groupLabel}${getFormTimeFromRaw(group.time) || '\u00A0'}</div>`;
@@ -1271,7 +1465,11 @@
                 setElementText('pdf-ext-org-name', getFormValue('involves-external') === '會' ? getFormValue('organizer') : '不適用');
                 setElementText('pdf-ext-activity-name', getFormValue('activity-name'));
                 setElementText('pdf-ext-activity-date-location', getFormValue('activity-location')); 
-                setElementText('pdf-ext-real-activity-date', getFormDate('activity-date')); 
+                
+                const activityDates = getActivityDatesData();
+                const firstStartDate = activityDates.length > 0 ? activityDates[0].startDate : '';
+                setElementText('pdf-ext-real-activity-date', formatSingleDateForPDF(firstStartDate)); 
+                
                 setElementText('pdf-ext-internal-resp-name', getFormValue('responsible-teacher'));
                 setElementText('pdf-ext-internal-resp-pos', getFormValue('responsible-teacher-position'));
                 setElementText('pdf-ext-dept', getFormValue('responsible-dept'));
@@ -1293,9 +1491,16 @@
                 setElementText('pdf-slp-resp-teacher', getFormValue('responsible-teacher'));
                 setElementText('pdf-slp-leading-teacher', getFormValue('leading-teacher'));
                 setElementText('pdf-slp-organizer', getFormValue('organizer'));
-                setElementText('pdf-slp-activity-date', getFormDate('activity-date'));
-                setElementText('pdf-slp-activity-time', getFormValue('activity-time'));
-                setElementText('pdf-slp-activity-duration', getFormValue('activity-duration'));
+                
+                const activityDates = getActivityDatesData();
+                const activityDateHtml = activityDates.map(entry => `<span>${formatActivityDateEntryForDisplay(entry) || '\u00A0'}</span>`).join('');
+                setElementHtml('pdf-slp-activity-date', activityDateHtml || '<span>\u00A0</span>');
+
+                const { displayTime, displayDuration, durationUnit } = calculateActivityDetails();
+                setElementText('pdf-slp-activity-time', displayTime);
+                setElementText('pdf-slp-activity-duration', displayDuration + (durationUnit ? " " + durationUnit : ""));
+
+
                 setElementText('pdf-slp-activity-location', getFormValue('activity-location'));
                 setElementText('pdf-slp-affects-lessons', getFormValue('affects-lessons'));
                 setElementText('pdf-slp-activity-scope', getFormValue('activity-scope'));
@@ -1360,11 +1565,8 @@
                     ["負責科/組/會社", getFormValue('responsible-dept')], ["活動名稱", getFormValue('activity-name')], 
                     ["負責老師", getFormValue('responsible-teacher')], ["負責老師職位", getFormValue('responsible-teacher-position')], 
                     ["領隊老師", getFormValue('leading-teacher')], ["主辦/合作機構", getFormValue('organizer')], 
-                    ["活動日期", getFormValue('activity-date')], ["活動時間", getFormValue('activity-time')], 
-                    ["活動時數", getFormValue('activity-duration')], 
-                    // ["集合時間", getFormValue('assembly-time')], // Removed old single fields
-                    // ["集合地點", getFormValue('assembly-point')], // Removed old single fields
-                    ["集合安排", JSON.stringify(getAssemblyGroupsData())], // Added new combined field
+                    ["活動日期資料", JSON.stringify(getActivityDatesData())],
+                    ["集合安排", JSON.stringify(getAssemblyGroupsData())], 
                     ["解散時間", getFormValue('dismissal-time')], ["解散地點", getFormValue('dismissal-point')], 
                     ["活動地點", getFormValue('activity-location')], ["會否影響課堂", getFormValue('affects-lessons')], 
                     ["活動範圍", getFormValue('activity-scope')], ["活動規模", getFormValue('activity-scale')], 
@@ -1399,24 +1601,33 @@
                         const jsonData = XLSX.utils.sheet_to_json(worksheet, {header: 1}); const formData = {};
                         jsonData.slice(1).forEach(row => { if(row[0] && row[1] !== undefined) formData[row[0]] = row[1];});
                         function setFormValue(id, value) { if(document.getElementById(id) && value !== undefined && value !== null) document.getElementById(id).value = value; }
-                        setFormValue('responsible-dept', formData['負責科/組/會社']); setFormValue('activity-name', formData['活動名稱']); setFormValue('responsible-teacher', formData['負責老師']); setFormValue('responsible-teacher-position', formData['負責老師職位']); setFormValue('leading-teacher', formData['領隊老師']); setFormValue('organizer', formData['主辦/合作機構']); setFormValue('activity-date', formData['活動日期']); setFormValue('activity-time', formData['活動時間']); setFormValue('activity-duration', formData['活動時數']); 
-                        // setFormValue('assembly-time', formData['集合時間']); // Removed
-                        // setFormValue('assembly-point', formData['集合地點']); // Removed
+                        setFormValue('responsible-dept', formData['負責科/組/會社']); setFormValue('activity-name', formData['活動名稱']); setFormValue('responsible-teacher', formData['負責老師']); setFormValue('responsible-teacher-position', formData['負責老師職位']); setFormValue('leading-teacher', formData['領隊老師']); setFormValue('organizer', formData['主辦/合作機構']); 
+                        
+                        activityDatesContainer.innerHTML = ''; 
+                        activityDateEntryCounter = 0;
+                        if (formData['活動日期資料']) {
+                            try {
+                                const importedActivityDates = JSON.parse(formData['活動日期資料']);
+                                if (Array.isArray(importedActivityDates) && importedActivityDates.length > 0) {
+                                    importedActivityDates.forEach(dateEntry => addActivityDateEntryUI(dateEntry));
+                                } else { addActivityDateEntryUI(); }
+                            } catch (err) { console.error("Error parsing 活動日期資料 from Excel:", err); addActivityDateEntryUI(); }
+                        } else { addActivityDateEntryUI(); }
+
+
                         setFormValue('dismissal-time', formData['解散時間']); setFormValue('dismissal-point', formData['解散地點']); 
                         setFormValue('activity-location', formData['活動地點']); setFormValue('affects-lessons', formData['會否影響課堂']); setFormValue('activity-scope', formData['活動範圍']); setFormValue('activity-scale', formData['活動規模']);
                         
-                        assemblyGroupsContainer.innerHTML = ''; // Clear existing UI for assembly groups
+                        assemblyGroupsContainer.innerHTML = ''; 
                         assemblyGroupCounter = 0;
                         if (formData['集合安排']) {
                             try {
                                 const importedAssemblyGroups = JSON.parse(formData['集合安排']);
-                                if (Array.isArray(importedAssemblyGroups)) {
+                                if (Array.isArray(importedAssemblyGroups) && importedAssemblyGroups.length > 0) {
                                     importedAssemblyGroups.forEach(group => addAssemblyGroup(group));
-                                }
-                            } catch (e) { console.error("Error parsing 集合安排 from Excel:", e); addAssemblyGroup(); /* Add a default one if parsing fails */ }
-                        } else {
-                            addAssemblyGroup(); // Add a default one if not in Excel
-                        }
+                                } else { addAssemblyGroup(); }
+                            } catch (err) { console.error("Error parsing 集合安排 from Excel:", err); addAssemblyGroup(); }
+                        } else { addAssemblyGroup(); }
 
 
                         document.querySelectorAll('input[name="activity-category"]').forEach(cb => cb.checked = false);
@@ -1430,7 +1641,7 @@
                         studentListTbody.innerHTML = ''; studentCounter = 0;
                         if (formData['出席學生名單'] && formData['出席學生名單'].length > 0) {
                             const studentStrings = formData['出席學生名單'].toString().split('||');
-                            studentStrings.forEach(s => { if (s) { const student = JSON.parse(s); addStudentRow(student); }}); 
+                            studentStrings.forEach(s => { if (s) { try { const student = JSON.parse(s); addStudentRow(student); } catch(e){console.error("Error parsing student data from Excel:", s, e)} }}); 
                         } if (studentListTbody.children.length === 0) { addStudentRow(); }
                         renumberStudents();
                         noticeTypeSelect.dispatchEvent(new Event('change')); needsParentOptionsSelect.dispatchEvent(new Event('change')); parentOptionsContentSelect.dispatchEvent(new Event('change')); externalOrgDataSourceSelect.dispatchEvent(new Event('change'));
@@ -1470,7 +1681,7 @@
                         headers.forEach((header, index) => {
                             if (["class", "班別"].includes(header)) colMap.class = index;
                             else if (["no", "number", ".no", "學號"].includes(header)) colMap.no = index;
-                            else if (["name", "student name", "姓名"].includes(header)) colMap.name = index;
+                            else if (["name", "student name", "姓名", "student", "學生"].includes(header)) colMap.name = index;
                             else if (["role", "活動角色"].includes(header)) colMap.role = index;
                         });
 
