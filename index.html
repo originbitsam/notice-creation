@@ -40,14 +40,32 @@
         button.secondary { background-color: #95a5a6; }
         button.secondary:hover { background-color: #7f8c8d; }
         .file-input-hidden { display: none; }
-        .student-list-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+        
+        .student-table-wrapper {
+            overflow-x: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .student-list-table { width: 100%; border-collapse: collapse; margin-top: 0px; table-layout: auto; min-width: 1000px; } /* min-width for horizontal scroll */
         .student-list-table th, .student-list-table td { border: 1px solid #ddd; padding: 7px; text-align: left; font-size: 0.9em;}
-        .student-list-table th { background-color: #f2f2f2; font-size: 0.85em; }
-        .student-list-table input[type="text"], .student-list-table select { width: calc(100% - 8px); padding: 4px; font-size: 0.9em; }
+        .student-list-table th { background-color: #f2f2f2; font-size: 0.85em; white-space: nowrap;}
+        .student-list-table input[type="text"], .student-list-table input[type="time"], .student-list-table select, .student-list-table textarea { width: calc(100% - 8px); padding: 4px; font-size: 0.9em; box-sizing: border-box; min-width: 80px; }
+        .student-list-table textarea { min-height: 40px; resize: vertical;}
         .student-list-table button { padding: 4px 7px; font-size: 0.75em; margin-top: 4px; background-color: #e74c3c;}
         .student-list-table button:hover { background-color: #c0392b;}
-        .advanced-mode-toggle { display: flex; align-items: center; margin-bottom: 18px; justify-content: flex-end; }
-        .advanced-mode-toggle label { margin-right: 8px; font-weight: bold; font-size: 0.95em;}
+        .student-list-table .after-activity-col { display: none; }
+        .student-list-table .after-activity-input-container { display: none; }
+        body.after-activity-mode .student-list-table .after-activity-col { display: table-cell; }
+        body.after-activity-mode .student-list-table .after-activity-input-container { display: block; }
+        body.after-activity-mode .student-list-table .student-role-other { display: block; }
+        .student-list-table td.col-checkbox, .student-list-table th.col-checkbox { width: 30px; text-align: center; min-width: 30px;}
+        .student-list-table td.col-seq { width: 40px; text-align: center; min-width: 40px;}
+        .student-list-table td.col-actions { width: 60px; text-align: center; min-width: 60px;}
+
+
+        .mode-toggle-container { display: flex; align-items: center; margin-bottom: 18px; justify-content: flex-end; }
+        .mode-toggle-container label { margin-right: 8px; font-weight: bold; font-size: 0.95em;}
         .switch { position: relative; display: inline-block; width: 44px; height: 22px; } 
         .switch input { display:none; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 22px; }
@@ -75,7 +93,7 @@
         }
         .pdf-page-render p,
         .pdf-page-render li,
-        .pdf-page-render div:not(#pdf-template-notice .notice-details-grid):not(#pdf-template-notice .reply-slip-details-grid):not(#pdf-template-notice .notice-date-principal-moved),
+        .pdf-page-render div:not(#pdf-template-notice .notice-details-grid):not(#pdf-template-notice .reply-slip-details-grid):not(#pdf-template-notice .notice-date-principal-moved):not(#pdf-template-b-form .b-form-photo-grid),
         .pdf-page-render span, 
         .pdf-page-render td,
         .pdf-page-render th
@@ -179,9 +197,9 @@
              border-bottom: 0.5px solid black; padding-left:1mm; 
              width: 100%; 
         }
-        #pdf-template-notice .notice-details-grid > span > div { min-height: 1.35em; } /* For multi-line assembly */
+        #pdf-template-notice .notice-details-grid > span > div { min-height: 1.35em; } 
         #pdf-template-notice .notice-details-grid #pdf-activity-date {
-            display: block; /* Ensure it can contain block children if using divs */
+            display: block; 
         }
 
         #pdf-template-notice .notice-remarks-container { 
@@ -285,7 +303,7 @@
         #pdf-template-slp-form .slp-value-scope-item { margin-bottom: 0.6mm; white-space: nowrap;}
         #pdf-template-slp-form .slp-student-table { margin-top: 1.8mm; font-size: 8pt;}
         #pdf-template-slp-form .slp-student-table th, #pdf-template-slp-form .slp-student-table td { padding: 0.7mm 1mm; border: 0.5px solid #333; text-align: center;}
-        #pdf-template-slp-form .slp-student-table td:nth-child(1) {width: 8mm;} /* Adjusted for issue 6 */
+        #pdf-template-slp-form .slp-student-table td:nth-child(1) {width: 8mm;} 
         #pdf-template-slp-form .slp-student-table td:nth-child(2) {width: 11mm;} 
         #pdf-template-slp-form .slp-student-table td:nth-child(3) {width: 11mm;} 
         #pdf-template-slp-form .slp-student-table td:nth-child(4) { text-align: left; width: auto;} 
@@ -296,7 +314,7 @@
         #pdf-template-slp-form .slp-signatures { margin-top: 4mm; display: flex; justify-content: space-between; font-size: 9.5pt;}
         #pdf-template-slp-form .slp-signature-item { min-width: 38mm; white-space: nowrap; display:flex; align-items: baseline; } 
         #pdf-template-slp-form .slp-signature-item .signature-line {width: 50%; margin-left: 2mm;}
-        #pdf-template-slp-form #pdf-slp-activity-date span { display: block; margin-bottom: 0.3mm; } /* Style for multi-line dates */
+        #pdf-template-slp-form #pdf-slp-activity-date span { display: block; margin-bottom: 0.3mm; } 
 
 
         #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 9999; display: flex; justify-content: center; align-items: center;}
@@ -339,7 +357,68 @@
         .activity-date-entry {
             border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 4px; background-color: #fdfdfd;
         }
-        .activity-date-entry .form-group { margin-bottom:0 !important; } /* Override default form-group margin */
+        .activity-date-entry .form-group { margin-bottom:0 !important; } 
+
+        #photo-upload-section { margin-top: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9; }
+        #photo-drop-zone { border: 2px dashed #ccc; border-radius: 4px; padding: 20px; text-align: center; cursor: pointer; background-color: #fff; }
+        #photo-drop-zone.dragover { border-color: #3498db; background-color: #e9f5ff; }
+        #photo-previews { 
+            margin-top: 15px; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
+            gap: 15px; 
+        }
+        .photo-preview-item { 
+            position: relative; 
+            border: 1px solid #ddd; 
+            border-radius: 4px;
+            background-color: #fff; 
+            width: 100px; 
+            height: 100px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .photo-preview-item img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+        }
+        .remove-photo-btn { 
+            position: absolute; 
+            top: 2px; 
+            right: 2px; 
+            background-color: rgba(0, 0, 0, 0.5); 
+            color: white; 
+            border: none; 
+            border-radius: 50%; 
+            width: 20px; 
+            height: 20px; 
+            font-size: 12px; 
+            font-weight: bold;
+            line-height: 20px; 
+            text-align: center; 
+            cursor: pointer; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+        .remove-photo-btn:hover { background-color: rgba(231, 76, 60, 1); }
+
+
+        #pdf-template-b-form .b-form-header { text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 3mm; }
+        #pdf-template-b-form .b-form-sub-header { text-align: center; font-size: 13pt; font-weight: bold; margin-bottom: 5mm; }
+        #pdf-template-b-form .b-form-section-title { font-size: 12pt; font-weight: bold; margin-top: 4mm; margin-bottom: 2mm; border-bottom: 1px solid black; padding-bottom: 1mm;}
+        #pdf-template-b-form .b-form-grid { display: grid; grid-template-columns: auto 1fr; gap: 1mm 3mm; margin-bottom: 3mm; font-size:11pt; }
+        #pdf-template-b-form .b-form-grid label { font-weight: bold; }
+        #pdf-template-b-form .b-form-student-table { width:100%; border-collapse:collapse; font-size: 8pt; margin-top:2mm; }
+        #pdf-template-b-form .b-form-student-table th, #pdf-template-b-form .b-form-student-table td { border: 0.5px solid black; padding: 0.8mm 1mm; text-align:left; vertical-align:top; word-break:break-all; }
+        #pdf-template-b-form .b-form-student-table th { background-color: #f0f0f0; text-align:center; font-size:7.5pt; }
+        #pdf-template-b-form .b-form-list { padding-left: 5mm; margin-top:1mm; font-size:10pt; }
+        #pdf-template-b-form .b-form-list li { margin-bottom: 0.5mm; }
+        #pdf-template-b-form .b-form-photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-top:2mm; }
+        #pdf-template-b-form .b-form-photo-item img { width: 100%; height: auto; border: 0.5px solid #ccc; }
 
 
         @media (max-width: 768px) {
@@ -356,6 +435,10 @@
             .activity-date-entry > div { flex-direction: column; align-items: stretch !important; }
             .activity-date-entry .form-group { min-width: unset !important; width: 100%; margin-bottom: 10px !important; }
             .activity-date-entry button.remove-activity-date-entry { align-self: flex-start !important; margin-top: 5px; }
+            /* .student-list-table { font-size: 0.8em; } */ /* Removed to allow browser default scaling with scroll */
+            .student-list-table th, .student-list-table td { padding: 5px; }
+            .student-list-table input, .student-list-table select, .student-list-table textarea { font-size: 0.9em; }
+            #pdf-template-b-form .b-form-photo-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -363,9 +446,9 @@
     <div id="loading-overlay" class="hidden"> <div class="loading-spinner"></div> </div>
     <div class="container">
         <h1>學生活動通告系統</h1>
-        <div class="advanced-mode-toggle">
-            <label for="advanced-mode-checkbox">進階模式</label>
-            <label class="switch"> <input type="checkbox" id="advanced-mode-checkbox"> <span class="slider"></span> </label>
+        <div class="mode-toggle-container">
+            <label for="after-activity-mode-checkbox">活動完成後模式</label>
+            <label class="switch"> <input type="checkbox" id="after-activity-mode-checkbox"> <span class="slider"></span> </label>
         </div>
         <form id="activity-form">
             <h2>活動基本資料</h2>
@@ -421,27 +504,68 @@
             <div class="checkbox-group form-grid"> <label><input type="checkbox" name="value-education" value="堅毅"> 堅毅</label> <label><input type="checkbox" name="value-education" value="尊重他人"> 尊重他人</label> <label><input type="checkbox" name="value-education" value="責任感"> 責任感</label> <label><input type="checkbox" name="value-education" value="國民身份認同"> 國民身份認同</label> <label><input type="checkbox" name="value-education" value="承擔精神"> 承擔精神</label> <label><input type="checkbox" name="value-education" value="誠信"> 誠信</label> <label><input type="checkbox" name="value-education" value="關愛"> 關愛</label> <label><input type="checkbox" name="value-education" value="守法"> 守法</label> <label><input type="checkbox" name="value-education" value="同理心"> 同理心</label> <label><input type="checkbox" name="value-education" value="勤勞"> 勤勞</label> </div>
             <h3>價值相關學習範圍 (在適當空格加上剔號，可選多於一項)</h3>
             <div class="checkbox-group form-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));"> <label><input type="checkbox" name="value-learning-scope" value="品德及倫理範疇"> 品德及倫理範疇</label> <label><input type="checkbox" name="value-learning-scope" value="公民教育"> 公民教育</label> <label><input type="checkbox" name="value-learning-scope" value="國民教育"> 國民教育</label> <label><input type="checkbox" name="value-learning-scope" value="《憲法》及《基本法》教育"> 《憲法》及《基本法》教育</label> <label><input type="checkbox" name="value-learning-scope" value="國家安全教育"> 國家安全教育</label> <label><input type="checkbox" name="value-learning-scope" value="禁毒教育"> 禁毒教育</label> <label><input type="checkbox" name="value-learning-scope" value="生命教育"> 生命教育</label> <label><input type="checkbox" name="value-learning-scope" value="性教育"> 性教育</label> <label><input type="checkbox" name="value-learning-scope" value="媒體及資訊素養教育"> 媒體及資訊素養教育</label> <label><input type="checkbox" name="value-learning-scope" value="可持續發展教育"> 可持續發展教育</label> <label><input type="checkbox" name="value-learning-scope" value="人權教育"> 人權教育</label> <label><input type="checkbox" name="value-learning-scope" value="誠信教育"> 誠信教育</label> <label><input type="checkbox" name="value-learning-scope" value="守法教育"> 守法教育</label> <label><input type="checkbox" name="value-learning-scope" value="健康生活教育"> 健康生活教育</label> <label><input type="checkbox" name="value-learning-scope" value="家庭生活教育"> 家庭生活教育</label> </div>
-            <h3>出席學生名單及擔任角色 (如有)</h3>
-            <table id="student-list-table" class="student-list-table">
-                <thead> <tr> <th>序號</th> <th>班別</th> <th>學號</th> <th>姓名</th> <th>活動角色</th> <th>操作</th> </tr> </thead>
-                <tbody id="student-list-tbody"></tbody>
-            </table>
-            <div style="margin-top:10px; display:flex; flex-wrap: wrap; gap:10px; justify-content: flex-start; align-items: center;">
-                <button type="button" id="add-student-row" class="secondary" style="font-size:0.9em; padding: 8px 12px;">新增學生</button>
-                <label for="import-student-list-input" class="file-input-label secondary" style="font-size:0.9em; padding: 8px 12px;">匯入學生名單 (Excel/CSV)</label>
-                <input type="file" id="import-student-list-input" class="file-input-hidden" accept=".xlsx,.csv">
-                <button type="button" id="student-list-help-btn" style="padding: 8px 10px; background-color: #5dade2; border: none; color: white; border-radius: 4px; cursor: pointer; font-size:0.9em;">上載格式要求</button>
-                <button type="button" id="download-post-activity-student-list" class="secondary" style="font-size:0.9em; padding: 8px 12px; background-color: #27ae60;">下載活動後學生名單 (Excel)</button>
+            
+            <div id="student-list-section">
+                <h3>出席學生名單及擔任角色 (如有)</h3>
+                <div class="student-table-wrapper">
+                    <table id="student-list-table" class="student-list-table">
+                        <thead> 
+                            <tr> 
+                                <th class="col-checkbox"><input type="checkbox" id="select-all-students" title="全選/取消全選"></th>
+                                <th class="col-seq">序號</th> 
+                                <th>班別</th> <th>學號</th> <th>姓名</th> <th>活動角色</th> 
+                                <th class="after-activity-col">獎項</th>
+                                <th class="after-activity-col">獎品/獎金</th>
+                                <th class="after-activity-col">出席情況</th>
+                                <th class="after-activity-col">缺席原因</th>
+                                <th class="after-activity-col">遲到原因</th>
+                                <th class="after-activity-col">到達時間<br>(如遲到)</th>
+                                <th class="after-activity-col">備註</th>
+                                <th class="col-actions">操作</th> 
+                            </tr> 
+                        </thead>
+                        <tbody id="student-list-tbody"></tbody>
+                    </table>
+                </div>
+                <div style="margin-top:10px; display:flex; flex-wrap: wrap; gap:10px; justify-content: flex-start; align-items: center;">
+                    <button type="button" id="add-student-row" class="secondary" style="font-size:0.9em; padding: 8px 12px;">新增學生</button>
+                    <button type="button" id="remove-selected-students" class="secondary" style="font-size:0.9em; padding: 8px 12px; background-color: #e74c3c;">移除已選學生</button>
+                    <label for="import-student-list-input" class="file-input-label secondary" style="font-size:0.9em; padding: 8px 12px;">匯入學生名單 (Excel/CSV)</label>
+                    <input type="file" id="import-student-list-input" class="file-input-hidden" accept=".xlsx,.csv">
+                    <button type="button" id="student-list-help-btn" style="padding: 8px 10px; background-color: #5dade2; border: none; color: white; border-radius: 4px; cursor: pointer; font-size:0.9em;">上載格式要求</button>
+                </div>
             </div>
 
+            <div id="after-activity-data-section" class="hidden">
+                <h2>活動完成後資料</h2>
+                <div id="photo-upload-section">
+                    <h3>上載具代表性的活動相片 (最少1張)</h3>
+                    <div id="photo-drop-zone">
+                        <p>拖放相片到此處 (JPG/JPEG/PNG)，或點擊選擇檔案</p>
+                        <input type="file" id="activity-photos-input" class="file-input-hidden" multiple accept="image/jpeg,image/png,image/jpg">
+                    </div>
+                    <div id="photo-previews"></div>
+                </div>
+                <div id="award-summary-section" style="margin-top:20px;">
+                    <h3>獎項及獎品統計</h3>
+                    <p>總獎項數量: <span id="total-awards-count">0</span></p>
+                    <p>獎項名稱列表 (不重覆):</p>
+                    <ul id="unique-awards-list"><li>尚無獎項</li></ul>
+                    <p>獎品/獎金列表 (不重覆):</p>
+                    <ul id="unique-prizes-list"><li>尚無獎品/獎金</li></ul>
+                </div>
+            </div>
+
+
             <div class="button-group">
-                <button type="button" id="generate-pdf-main">下載 PDF</button>
+                <button type="button" id="generate-pdf-main">下載通告 PDF</button>
+                <button type="button" id="generate-pdf-b" class="hidden">下載B表 PDF</button>
                 <button type="button" id="export-inputs-excel">匯出目前輸入 (Excel)</button>
                 <label for="import-excel-input" class="file-input-label secondary">匯入已存輸入 (Excel)</label>
                 <input type="file" id="import-excel-input" class="file-input-hidden" accept=".xlsx">
                 <input type="file" id="attachments-input" class="file-input-hidden" multiple accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,.xls,.xlsx">
                 <div id="attachment-names" style="font-size:0.9em; color:#555; width:100%; text-align:center; margin-top:5px;"></div>
-                <button type="button" id="download-original-template" class="secondary hidden">下載原始Excel範本</button>
+                <button type="button" id="download-original-template" class="secondary">下載原始Excel範本</button>
             </div>
         </form>
     </div>
@@ -648,10 +772,38 @@
             <div class="slp-signature-item">日期：<span class="signature-line"></span></div>
         </div>
     </div>
+
+    <div id="pdf-template-b-form" class="pdf-page-render">
+        <div class="b-form-header">佛教何南金中學</div>
+        <div class="b-form-sub-header">B表 - 最終名單及比賽獎項記錄表</div>
+        
+        <div class="b-form-section-title">基本資料</div>
+        <div class="b-form-grid">
+            <label>活動名稱:</label><span id="pdf-b-activity-name"></span>
+            <label>負責老師:</label><span id="pdf-b-resp-teacher"></span>
+            <label>合辦機構:</label><span id="pdf-b-organizer"></span>
+            <label>通告編號:</label><span id="pdf-b-notice-no"></span>
+        </div>
+
+        <div class="b-form-section-title">最終名單及比賽獎項記錄表</div>
+        <div id="pdf-b-student-list-render-area"></div>
+        <div style="font-size:10pt; margin-top:2mm;">
+            <p>總獎項數量: <span id="pdf-b-total-awards-count"></span></p>
+            <p>獎項名稱列表 (不重覆):</p>
+            <ul id="pdf-b-unique-awards-list" class="b-form-list"></ul>
+            <p>獎品/獎金列表 (不重覆):</p>
+            <ul id="pdf-b-unique-prizes-list" class="b-form-list"></ul>
+        </div>
+
+        <div class="b-form-section-title">具代表性的活動相片</div>
+        <div id="pdf-b-photo-render-area" class="b-form-photo-grid">
+        </div>
+    </div>
     
     <script>
         const { jsPDF } = window.jspdf;
         let attachedFiles = [];
+        let activityPhotos = [];
         
         let currentGlobalPdfY = 0; 
         let isFirstPageOfEntireDocumentGlobal = true;
@@ -712,7 +864,7 @@
 
 
         document.addEventListener('DOMContentLoaded', function() {
-            const advancedModeCheckbox = document.getElementById('advanced-mode-checkbox');
+            const afterActivityModeCheckbox = document.getElementById('after-activity-mode-checkbox');
             const downloadOriginalBlankTemplateBtn = document.getElementById('download-original-template');
             const activityOriginalPriceGroup = document.getElementById('activity-original-price-group');
             const noticeTypeSelect = document.getElementById('notice-type');
@@ -730,22 +882,34 @@
             const addActivityDateEntryButton = document.getElementById('add-activity-date-entry');
             const activityDatesContainer = document.getElementById('activity-dates-container');
             const studentListHelpBtn = document.getElementById('student-list-help-btn');
-            const downloadPostActivityStudentListBtn = document.getElementById('download-post-activity-student-list');
+            const afterActivityDataSection = document.getElementById('after-activity-data-section');
+            const generatePdfBButton = document.getElementById('generate-pdf-b');
+            const photoDropZone = document.getElementById('photo-drop-zone');
+            const activityPhotosInput = document.getElementById('activity-photos-input');
+            const photoPreviewsContainer = document.getElementById('photo-previews');
+            const selectAllStudentsCheckbox = document.getElementById('select-all-students');
+            const removeSelectedStudentsBtn = document.getElementById('remove-selected-students');
             
             function showLoader() { if(loadingOverlay) loadingOverlay.classList.remove('hidden'); }
             function hideLoader() { if(loadingOverlay) loadingOverlay.classList.add('hidden'); }
 
-            function toggleAdvancedMode() {
-                const isAdvanced = advancedModeCheckbox.checked;
-                downloadOriginalBlankTemplateBtn.classList.toggle('hidden', !isAdvanced);
-                if (isAdvanced) { activityOriginalPriceGroup.classList.remove('hidden'); } 
-                else { toggleOriginalPriceVisibility(); }
+            function toggleAfterActivityMode() {
+                const isAfterActivity = afterActivityModeCheckbox.checked;
+                document.body.classList.toggle('after-activity-mode', isAfterActivity);
+                afterActivityDataSection.classList.toggle('hidden', !isAfterActivity);
+                generatePdfBButton.classList.toggle('hidden', !isAfterActivity);
+                document.querySelectorAll('.student-list-table .after-activity-col').forEach(el => el.style.display = isAfterActivity ? 'table-cell' : 'none');
+                document.querySelectorAll('.student-list-table .after-activity-input-container').forEach(el => el.style.display = isAfterActivity ? 'block' : 'none');
+                updateStudentListHelpText();
+                if (isAfterActivity) {
+                    updateAwardSummary();
+                }
             }
+            afterActivityModeCheckbox.addEventListener('change', toggleAfterActivityMode);
+
 
             function toggleOriginalPriceVisibility() {
-                if (!advancedModeCheckbox.checked) {
-                     activityOriginalPriceGroup.classList.toggle('hidden', noticeTypeSelect.value === '無需收費通告');
-                }
+                activityOriginalPriceGroup.classList.toggle('hidden', noticeTypeSelect.value === '無需收費通告');
             }
             
             function toggleParentOptionsVisibility() {
@@ -765,7 +929,6 @@
                 externalOrgDetailsGroup.classList.toggle('hidden', externalOrgDataSourceSelect.value !== '見以下資料');
             }
 
-            advancedModeCheckbox.addEventListener('change', toggleAdvancedMode);
             noticeTypeSelect.addEventListener('change', toggleOriginalPriceVisibility);
             needsParentOptionsSelect.addEventListener('change', toggleParentOptionsVisibility);
             parentOptionsContentSelect.addEventListener('change', toggleParentOptionsOtherVisibility);
@@ -779,7 +942,8 @@
                 studentCounter++;
                 const row = studentListTbody.insertRow();
                 row.innerHTML = `
-                    <td>${studentCounter}</td>
+                    <td class="col-checkbox"><input type="checkbox" class="student-select-checkbox"></td>
+                    <td class="col-seq">${studentCounter}</td>
                     <td><input type="text" name="student-class-${studentCounter}" class="student-class" value="${studentData.class || ''}"></td>
                     <td><input type="text" name="student-id-${studentCounter}" class="student-id" value="${studentData.id || ''}"></td>
                     <td><input type="text" name="student-name-${studentCounter}" class="student-name" value="${studentData.name || ''}"></td>
@@ -787,13 +951,31 @@
                         <select name="student-role-${studentCounter}" class="student-role">
                             <option value="參加者">參加者</option> <option value="主席">主席</option> <option value="組長">組長</option> <option value="其他">其他</option>
                         </select>
-                        <input type="text" name="student-role-other-${studentCounter}" class="student-role-other" placeholder="請註明其他角色" style="display:none;">
+                        <input type="text" name="student-role-other-${studentCounter}" class="student-role-other" placeholder="請註明其他角色" style="display:none; margin-top:4px;">
                     </td>
-                    <td><button type="button" class="remove-student-row">移除</button></td>
+                    <td class="after-activity-col"><div class="after-activity-input-container"><textarea name="student-awards-${studentCounter}" class="student-awards" placeholder="每行一個獎項">${studentData.awards || ''}</textarea></div></td>
+                    <td class="after-activity-col"><div class="after-activity-input-container"><textarea name="student-prizes-${studentCounter}" class="student-prizes" placeholder="每行一個獎品/獎金">${studentData.prizes || ''}</textarea></div></td>
+                    <td class="after-activity-col">
+                        <div class="after-activity-input-container">
+                            <select name="student-attendance-${studentCounter}" class="student-attendance">
+                                <option value="出席">出席</option> <option value="缺席">缺席</option> <option value="遲到">遲到</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td class="after-activity-col"><div class="after-activity-input-container"><input type="text" name="student-absence-reason-${studentCounter}" class="student-absence-reason" placeholder="缺席原因" style="display:none;"></div></td>
+                    <td class="after-activity-col"><div class="after-activity-input-container"><input type="text" name="student-lateness-reason-${studentCounter}" class="student-lateness-reason" placeholder="遲到原因" style="display:none;"></div></td>
+                    <td class="after-activity-col"><div class="after-activity-input-container"><input type="time" name="student-arrival-time-${studentCounter}" class="student-arrival-time" style="display:none;"></div></td>
+                    <td class="after-activity-col"><div class="after-activity-input-container"><textarea name="student-remarks-${studentCounter}" class="student-remarks" placeholder="備註">${studentData.remarks || ''}</textarea></div></td>
+                    <td class="col-actions"><button type="button" class="remove-student-row">移除</button></td>
                 `;
+                
                 const roleSelect = row.querySelector('.student-role');
                 const roleOtherInput = row.querySelector('.student-role-other');
-                
+                const attendanceSelect = row.querySelector('.student-attendance');
+                const absenceReasonInput = row.querySelector('.student-absence-reason');
+                const latenessReasonInput = row.querySelector('.student-lateness-reason');
+                const arrivalTimeInput = row.querySelector('.student-arrival-time');
+
                 if (studentData.role) {
                     const roleValue = String(studentData.role).trim(); 
                     const existingOption = Array.from(roleSelect.options).find(opt => opt.value === roleValue);
@@ -806,13 +988,35 @@
                 } else {
                     roleSelect.value = "參加者"; 
                 }
-
                 roleOtherInput.style.display = roleSelect.value === '其他' ? 'block' : 'none';
                 if(studentData.roleOther) roleOtherInput.value = studentData.roleOther;
 
+                attendanceSelect.value = studentData.attendance || '出席';
+                absenceReasonInput.value = studentData.absenceReason || '';
+                latenessReasonInput.value = studentData.latenessReason || '';
+                arrivalTimeInput.value = studentData.arrivalTime || '';
+
+                function toggleAttendanceFields() {
+                    const selectedAttendance = attendanceSelect.value;
+                    absenceReasonInput.style.display = selectedAttendance === '缺席' ? 'block' : 'none';
+                    latenessReasonInput.style.display = selectedAttendance === '遲到' ? 'block' : 'none';
+                    arrivalTimeInput.style.display = selectedAttendance === '遲到' ? 'block' : 'none';
+                }
+                
+                attendanceSelect.addEventListener('change', toggleAttendanceFields);
+                toggleAttendanceFields();
+
 
                 roleSelect.addEventListener('change', function() { roleOtherInput.style.display = this.value === '其他' ? 'block' : 'none'; });
-                row.querySelector('.remove-student-row').addEventListener('click', function() { this.closest('tr').remove(); renumberStudents(); });
+                row.querySelector('.remove-student-row').addEventListener('click', function() { this.closest('tr').remove(); renumberStudents(); updateAwardSummary(); });
+                
+                row.querySelectorAll('.student-awards, .student-prizes').forEach(textarea => {
+                    textarea.addEventListener('input', updateAwardSummary);
+                });
+
+                const isAfterActivity = afterActivityModeCheckbox.checked;
+                row.querySelectorAll('.after-activity-col .after-activity-input-container').forEach(el => el.style.display = isAfterActivity ? 'block' : 'none');
+                row.querySelectorAll('.after-activity-col').forEach(el => el.style.display = isAfterActivity ? 'table-cell' : 'none');
             }
             
             function renumberStudents() {
@@ -820,18 +1024,39 @@
                 studentCounter = 0;
                 rows.forEach((row, index) => {
                     studentCounter = index + 1;
-                    row.cells[0].innerText = studentCounter;
-                    row.querySelectorAll('input, select').forEach(input => {
+                    row.cells[1].innerText = studentCounter;
+                    row.querySelectorAll('input, select, textarea').forEach(input => {
                         const nameAttr = input.getAttribute('name');
                         if (nameAttr) {
                             input.setAttribute('name', nameAttr.replace(/-\d+$/, `-${studentCounter}`));
                         }
                     });
                 });
+                selectAllStudentsCheckbox.checked = false;
             }
 
-            addStudentRowBtn.addEventListener('click', () => addStudentRow());
+            addStudentRowBtn.addEventListener('click', () => { addStudentRow(); renumberStudents(); });
             addStudentRow(); 
+
+            selectAllStudentsCheckbox.addEventListener('change', function() {
+                studentListTbody.querySelectorAll('.student-select-checkbox').forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
+            });
+
+            removeSelectedStudentsBtn.addEventListener('click', function() {
+                const selectedRows = Array.from(studentListTbody.querySelectorAll('.student-select-checkbox:checked'));
+                if (selectedRows.length === 0) {
+                    alert("請先選擇要移除的學生。");
+                    return;
+                }
+                if (confirm(`確定要移除已選的 ${selectedRows.length} 名學生嗎？`)) {
+                    selectedRows.forEach(checkbox => checkbox.closest('tr').remove());
+                    renumberStudents();
+                    updateAwardSummary();
+                }
+            });
+
 
             const activityCategoryCheckboxes = document.querySelectorAll('#activity-category-checkboxes input[type="checkbox"]');
             activityCategoryCheckboxes.forEach(checkbox => {
@@ -908,49 +1133,26 @@
             addActivityDateEntryButton.addEventListener('click', () => addActivityDateEntryUI());
             addActivityDateEntryUI(); 
 
-            studentListHelpBtn.addEventListener('click', () => {
-                alert("學生名單 Excel/CSV 檔案格式說明：\n\n檔案應包含以下欄位標題 (大小楷不限，次序不限):\n- 班別 (或 class)\n- 學號 (或 no, number, no.)\n- 姓名 (或 name, student name, student, 學生)\n- 活動角色 (或 role) (選填，預設為 \"參加者\")\n\n第一行為標題行，之後每行為一名學生資料。");
-            });
-            
-            downloadPostActivityStudentListBtn.addEventListener('click', function() {
-                const studentDataForExcel = [
-                    ["序號", "班別", "學號", "姓名(中文)", "姓名(英文)", "性別", "角色"]
-                ];
-                const studentRows = studentListTbody.querySelectorAll('tr');
-                studentRows.forEach((row, index) => {
-                    const studentClass = row.querySelector('.student-class').value;
-                    const studentId = row.querySelector('.student-id').value;
-                    const studentName = row.querySelector('.student-name').value;
-                    const roleSelect = row.querySelector('.student-role');
-                    const roleOtherInput = row.querySelector('.student-role-other');
-                    let role = roleSelect.value;
-                    if (role === '其他') {
-                        role = roleOtherInput.value || '其他';
-                    }
-                    studentDataForExcel.push([
-                        index + 1,
-                        studentClass,
-                        studentId,
-                        studentName,
-                        "", // 姓名(英文) - leave blank
-                        "", // 性別 - leave blank
-                        role
-                    ]);
-                });
-
-                if (studentDataForExcel.length <= 1) {
-                    alert("沒有學生資料可供下載。");
-                    return;
+            function updateStudentListHelpText() {
+                const isAfterActivity = afterActivityModeCheckbox.checked;
+                let helpText = "學生名單 Excel/CSV 檔案格式說明：\n\n檔案應包含以下欄位標題 (大小楷不限，次序不限):\n- 班別 (或 class)\n- 學號 (或 no, number, no.)\n- 姓名 (或 name, student name, student, 學生)\n- 活動角色 (或 role, 角色, position, post, 職務, 職位, 崗位)\n\n";
+                if (isAfterActivity) {
+                    helpText += "活動完成後模式額外支援欄位:\n" +
+                                "- 獎項 (或 award, awards, 獎, 得獎)\n" +
+                                "- 獎品/獎金 (或 prize, prizes, gift, gifts, 獎品, 獎金, 獎品 / 獎金)\n" +
+                                "- 出席情況 (或 attendance, 出席, 是否出席)\n" +
+                                "- 缺席原因 (或 absence reasons, absent reasons, absence reason, absent reason, abs reason, abs reasons, reason of abs, reasons of abs, reason of absence, reasons of absence)\n" +
+                                "- 遲到原因 (或 late reason, late reasons, reason of late, reasons of late)\n" +
+                                "- 到達時間 (或 arrival time, time of arrival, arrival, arrival at, arrive at, arrive, time, 時間, 抵達時間, 出席時間) (格式: HH:mm)\n" +
+                                "- 備註 (或 remarks, remark, comment, comments)\n\n";
                 }
-
-                const wb = XLSX.utils.book_new();
-                const ws = XLSX.utils.aoa_to_sheet(studentDataForExcel);
-                XLSX.utils.book_append_sheet(wb, ws, "學生名單");
-                XLSX.writeFile(wb, "活動後學生名單.xlsx");
-            });
+                helpText += "第一行為標題行，之後每行為一名學生資料。所有欄位均為選填。";
+                studentListHelpBtn.onclick = () => alert(helpText);
+            }
+            updateStudentListHelpText();
 
 
-            toggleOriginalPriceVisibility(); toggleParentOptionsVisibility(); toggleExternalOrgDetailsVisibility(); toggleAdvancedMode(); 
+            toggleOriginalPriceVisibility(); toggleParentOptionsVisibility(); toggleExternalOrgDetailsVisibility(); toggleAfterActivityMode(); 
 
             async function generatePdf() {
                 if (!getFormValue('responsible-teacher').trim()) {
@@ -1290,7 +1492,7 @@
                     const startDate = new Date(entry.startDate + "T00:00:00");
                     const endDate = new Date(entry.endDate + "T00:00:00");
 
-                    if (startDate.getTime() === endDate.getTime()) { // Single day
+                    if (startDate.getTime() === endDate.getTime()) { 
                         let earliestAssemblyTime = null;
                         assemblyGroups.forEach(group => {
                             if (group.time) {
@@ -1311,13 +1513,13 @@
                                 displayTime = `${getFormTimeFromRaw(earliestAssemblyTime)}至${getFormTimeFromRaw(dismissalTimeValue)}`;
                             }
                         }
-                    } else { // Date range
+                    } else { 
                         const diffTime = Math.abs(endDate - startDate);
                         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
                         displayDuration = `${diffDays}`;
                         durationUnit = "天";
                     }
-                } else { // Multiple entries/ranges
+                } else { 
                     let totalDays = 0;
                     activityDates.forEach(entry => {
                         const startDate = new Date(entry.startDate + "T00:00:00");
@@ -1541,9 +1743,11 @@
                 if (slpStudentTbody) slpStudentTbody.innerHTML = ''; 
                 const studentRows = studentListTbody.querySelectorAll('tr');
                 studentRows.forEach((row, index) => {
-                    const cells = row.querySelectorAll('input, select');
-                    const studentClass = cells[0].value; const studentId = cells[1].value; const studentName = cells[2].value;
-                    const roleSelect = cells[3]; const roleOtherInput = cells[4];
+                    const studentClass = row.querySelector('.student-class').value;
+                    const studentId = row.querySelector('.student-id').value;
+                    const studentName = row.querySelector('.student-name').value;
+                    const roleSelect = row.querySelector('.student-role');
+                    const roleOtherInput = row.querySelector('.student-role-other');
                     let roleChairman = '', roleLeader = '', roleParticipant = '', roleOtherText = '';
                     if (roleSelect.value === '主席') roleChairman = '✓'; else if (roleSelect.value === '組長') roleLeader = '✓';
                     else if (roleSelect.value === '參加者') roleParticipant = '✓'; else if (roleSelect.value === '其他') roleOtherText = roleOtherInput.value || '✓';
@@ -1580,12 +1784,33 @@
                     ["是否需要提供家長選項", getFormValue('needs-parent-options')], ["家長的選項內容", getFormValue('parent-options-content')], 
                     ["家長選項其他", getFormValue('parent-options-other')], ["通告備註", getFormValue('notice-remarks')], 
                     ["外間組織/人士的資料提供方式", getFormValue('external-org-data-source')], ["外間組織/人士的資料", getFormValue('external-org-details')],
+                    ["活動完成後模式", afterActivityModeCheckbox.checked]
                 ];
                 const interSchoolComp = []; document.querySelectorAll('input[name="inter-school-competition"]').forEach(cb => { if (cb.type === 'checkbox') interSchoolComp.push(`${cb.value}:${cb.checked}`); else if (cb.type === 'text') interSchoolComp.push(`other_text:${cb.value}`); });
                 data.push(["全港性校際比賽", interSchoolComp.join(',')]);
                 const valueEducation = Array.from(document.querySelectorAll('input[name="value-education"]:checked')).map(cb => cb.value).join(','); data.push(["活動包含價值教育", valueEducation]);
                 const valueLearningScope = Array.from(document.querySelectorAll('input[name="value-learning-scope"]:checked')).map(cb => cb.value).join(','); data.push(["價值相關學習範圍", valueLearningScope]);
-                const students = []; studentListTbody.querySelectorAll('tr').forEach(row => { students.push(JSON.stringify({ class: row.querySelector('.student-class').value, id: row.querySelector('.student-id').value, name: row.querySelector('.student-name').value, role: row.querySelector('.student-role').value, roleOther: row.querySelector('.student-role-other').value,}));});
+                
+                const students = []; 
+                studentListTbody.querySelectorAll('tr').forEach(row => { 
+                    const studentEntry = { 
+                        class: row.querySelector('.student-class').value, 
+                        id: row.querySelector('.student-id').value, 
+                        name: row.querySelector('.student-name').value, 
+                        role: row.querySelector('.student-role').value, 
+                        roleOther: row.querySelector('.student-role-other').value
+                    };
+                    if (afterActivityModeCheckbox.checked) {
+                        studentEntry.awards = row.querySelector('.student-awards').value;
+                        studentEntry.prizes = row.querySelector('.student-prizes').value;
+                        studentEntry.attendance = row.querySelector('.student-attendance').value;
+                        studentEntry.absenceReason = row.querySelector('.student-absence-reason').value;
+                        studentEntry.latenessReason = row.querySelector('.student-lateness-reason').value;
+                        studentEntry.arrivalTime = row.querySelector('.student-arrival-time').value;
+                        studentEntry.remarks = row.querySelector('.student-remarks').value;
+                    }
+                    students.push(JSON.stringify(studentEntry));
+                });
                 data.push(["出席學生名單", students.join('||')]); 
                 const wb = XLSX.utils.book_new(); const ws = XLSX.utils.aoa_to_sheet(data); XLSX.utils.book_append_sheet(wb, ws, "活動資料收集_Save"); XLSX.writeFile(wb, "活動通告輸入備份.xlsx");
             });
@@ -1638,12 +1863,22 @@
                         if (formData['全港性校際比賽']) { const compData = formData['全港性校際比賽'].toString().split(','); document.querySelectorAll('input[name="inter-school-competition"]').forEach(cb => { if (cb.type === 'checkbox') { cb.checked = !!compData.find(d => d === `${cb.value}:true`); } else if (cb.type === 'text' && cb.name === 'inter-school-competition-other') { const match = compData.find(d => d.startsWith(`other_text:`)); if (match) cb.value = match.split(':')[1]; }});}
                         if (formData['活動包含價值教育']) { const values = formData['活動包含價值教育'].toString().split(','); document.querySelectorAll('input[name="value-education"]').forEach(cb => cb.checked = values.includes(cb.value));}
                         if (formData['價值相關學習範圍']) { const scopes = formData['價值相關學習範圍'].toString().split(','); document.querySelectorAll('input[name="value-learning-scope"]').forEach(cb => cb.checked = scopes.includes(cb.value));}
+                        
+                        if (formData['活動完成後模式'] === true || formData['活動完成後模式'] === 'true') {
+                            afterActivityModeCheckbox.checked = true;
+                        } else {
+                            afterActivityModeCheckbox.checked = false;
+                        }
+                        toggleAfterActivityMode();
+
+
                         studentListTbody.innerHTML = ''; studentCounter = 0;
                         if (formData['出席學生名單'] && formData['出席學生名單'].length > 0) {
                             const studentStrings = formData['出席學生名單'].toString().split('||');
                             studentStrings.forEach(s => { if (s) { try { const student = JSON.parse(s); addStudentRow(student); } catch(e){console.error("Error parsing student data from Excel:", s, e)} }}); 
                         } if (studentListTbody.children.length === 0) { addStudentRow(); }
                         renumberStudents();
+                        updateAwardSummary();
                         noticeTypeSelect.dispatchEvent(new Event('change')); needsParentOptionsSelect.dispatchEvent(new Event('change')); parentOptionsContentSelect.dispatchEvent(new Event('change')); externalOrgDataSourceSelect.dispatchEvent(new Event('change'));
                         alert('資料已成功匯入！');
                     };
@@ -1676,13 +1911,20 @@
                         }
                         
                         const headers = jsonData[0].map(h => String(h || '').toLowerCase().trim()); 
-                        const colMap = { class: -1, no: -1, name: -1, role: -1 };
+                        const colMap = { class: -1, no: -1, name: -1, role: -1, awards: -1, prizes: -1, attendance: -1, absenceReason: -1, latenessReason: -1, arrivalTime: -1, remarks: -1 };
 
                         headers.forEach((header, index) => {
                             if (["class", "班別"].includes(header)) colMap.class = index;
                             else if (["no", "number", "no.", "學號"].includes(header)) colMap.no = index;
                             else if (["name", "student name", "姓名", "student", "學生"].includes(header)) colMap.name = index;
-                            else if (["role", "活動角色"].includes(header)) colMap.role = index;
+                            else if (["role", "活動角色", "角色", "position", "post", "職務", "職位", "崗位"].includes(header)) colMap.role = index;
+                            else if (["awards", "award", "獎項", "獎", "得獎"].includes(header)) colMap.awards = index;
+                            else if (["prizes", "prize", "gift", "gifts", "獎品/獎金", "獎品 / 獎金", "獎品", "獎金"].includes(header)) colMap.prizes = index;
+                            else if (["attendance", "出席情況", "出席", "是否出席"].includes(header)) colMap.attendance = index;
+                            else if (["absence reason", "absencereason", "absent reason", "absentreason", "缺席原因", "abs reason", "reason of absence", "reasons of absence"].includes(header)) colMap.absenceReason = index;
+                            else if (["late reason", "latereason", "遲到原因", "reason of late", "reasons of late"].includes(header)) colMap.latenessReason = index;
+                            else if (["arrival time", "arrivaltime", "time of arrival", "arrival", "arrival at", "arrive at", "arrive", "time", "到達時間", "時間", "抵達時間", "出席時間"].includes(header)) colMap.arrivalTime = index;
+                            else if (["remarks", "remark", "comment", "comments", "備註"].includes(header)) colMap.remarks = index;
                         });
 
                         studentListTbody.innerHTML = ''; 
@@ -1694,13 +1936,21 @@
                                     class: colMap.class !== -1 ? (row[colMap.class] || '') : '',
                                     id: colMap.no !== -1 ? (row[colMap.no] || '') : '',
                                     name: colMap.name !== -1 ? (row[colMap.name] || '') : '',
-                                    role: colMap.role !== -1 ? (String(row[colMap.role] || '').trim()) : '參加者'
+                                    role: colMap.role !== -1 ? (String(row[colMap.role] || '').trim()) : '參加者',
+                                    awards: colMap.awards !== -1 ? (row[colMap.awards] || '') : '',
+                                    prizes: colMap.prizes !== -1 ? (row[colMap.prizes] || '') : '',
+                                    attendance: colMap.attendance !== -1 ? (row[colMap.attendance] || '出席') : '出席',
+                                    absenceReason: colMap.absenceReason !== -1 ? (row[colMap.absenceReason] || '') : '',
+                                    latenessReason: colMap.latenessReason !== -1 ? (row[colMap.latenessReason] || '') : '',
+                                    arrivalTime: colMap.arrivalTime !== -1 ? (row[colMap.arrivalTime] || '') : '',
+                                    remarks: colMap.remarks !== -1 ? (row[colMap.remarks] || '') : ''
                                 };
                                 addStudentRow(studentData);
                             }
                         });
                         if (studentListTbody.children.length === 0) addStudentRow(); 
                         renumberStudents();
+                        updateAwardSummary();
                         alert('學生名單已成功匯入！');
                     } catch (err) {
                         console.error("匯入學生名單時發生錯誤:", err);
@@ -1725,6 +1975,250 @@
                 link.click();
                 document.body.removeChild(link);
             });
+
+
+            photoDropZone.addEventListener('click', () => activityPhotosInput.click());
+            photoDropZone.addEventListener('dragover', (event) => {
+                event.preventDefault();
+                photoDropZone.classList.add('dragover');
+            });
+            photoDropZone.addEventListener('dragleave', () => photoDropZone.classList.remove('dragover'));
+            photoDropZone.addEventListener('drop', (event) => {
+                event.preventDefault();
+                photoDropZone.classList.remove('dragover');
+                if (event.dataTransfer.files) {
+                    handlePhotoFiles(event.dataTransfer.files);
+                }
+            });
+            activityPhotosInput.addEventListener('change', (event) => handlePhotoFiles(event.target.files));
+
+            function handlePhotoFiles(files) {
+                for (const file of files) {
+                    if (file.type.startsWith('image/')) {
+                        if (!activityPhotos.find(f => f.name === file.name && f.size === file.size)) {
+                             activityPhotos.push(file);
+                        }
+                    }
+                }
+                renderPhotoPreviews();
+                activityPhotosInput.value = null; 
+            }
+
+            function renderPhotoPreviews() {
+                photoPreviewsContainer.innerHTML = '';
+                activityPhotos.forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const previewItem = document.createElement('div');
+                        previewItem.className = 'photo-preview-item';
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        const removeBtn = document.createElement('button');
+                        removeBtn.className = 'remove-photo-btn';
+                        removeBtn.innerHTML = '&times;';
+                        removeBtn.title = '移除此相片';
+                        removeBtn.onclick = () => {
+                            activityPhotos.splice(index, 1);
+                            renderPhotoPreviews();
+                        };
+                        previewItem.appendChild(img);
+                        previewItem.appendChild(removeBtn);
+                        photoPreviewsContainer.appendChild(previewItem);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            function updateAwardSummary() {
+                if (!afterActivityModeCheckbox.checked) return;
+
+                let totalAwardsCount = 0;
+                const uniqueAwards = new Set();
+                const uniquePrizes = new Set();
+
+                studentListTbody.querySelectorAll('tr').forEach(row => {
+                    const awardsText = row.querySelector('.student-awards')?.value || '';
+                    const prizesText = row.querySelector('.student-prizes')?.value || '';
+
+                    awardsText.split('\n').forEach(line => {
+                        const trimmedLine = line.trim();
+                        if (trimmedLine) {
+                            totalAwardsCount++;
+                            uniqueAwards.add(trimmedLine);
+                        }
+                    });
+                    prizesText.split('\n').forEach(line => {
+                        const trimmedLine = line.trim();
+                        if (trimmedLine) {
+                            uniquePrizes.add(trimmedLine);
+                        }
+                    });
+                });
+
+                document.getElementById('total-awards-count').textContent = totalAwardsCount;
+                const uniqueAwardsListEl = document.getElementById('unique-awards-list');
+                uniqueAwardsListEl.innerHTML = '';
+                if (uniqueAwards.size > 0) {
+                    uniqueAwards.forEach(award => {
+                        const li = document.createElement('li');
+                        li.textContent = award;
+                        uniqueAwardsListEl.appendChild(li);
+                    });
+                } else {
+                    uniqueAwardsListEl.innerHTML = '<li>尚無獎項</li>';
+                }
+
+                const uniquePrizesListEl = document.getElementById('unique-prizes-list');
+                uniquePrizesListEl.innerHTML = '';
+                if (uniquePrizes.size > 0) {
+                    uniquePrizes.forEach(prize => {
+                        const li = document.createElement('li');
+                        li.textContent = prize;
+                        uniquePrizesListEl.appendChild(li);
+                    });
+                } else {
+                    uniquePrizesListEl.innerHTML = '<li>尚無獎品/獎金</li>';
+                }
+            }
+            
+            function populateBFormTemplate() {
+                setElementText('pdf-b-activity-name', getFormValue('activity-name'));
+                setElementText('pdf-b-resp-teacher', getFormValue('responsible-teacher'));
+                setElementText('pdf-b-organizer', getFormValue('organizer'));
+                setElementText('pdf-b-notice-no', getFormValue('notice-number'));
+
+                const studentListRenderArea = document.getElementById('pdf-b-student-list-render-area');
+                studentListRenderArea.innerHTML = '';
+                const table = document.createElement('table');
+                table.className = 'b-form-student-table';
+                const thead = table.createTHead();
+                const headerRow = thead.insertRow();
+                const headers = ["序號", "班別", "學號", "姓名", "角色", "獎項", "獎品/獎金", "出席情況", "缺席原因", "遲到原因", "到達時間", "備註"];
+                headers.forEach(text => {
+                    const th = document.createElement('th');
+                    th.textContent = text;
+                    headerRow.appendChild(th);
+                });
+                const tbody = table.createTBody();
+                studentListTbody.querySelectorAll('tr').forEach((row, index) => {
+                    const tr = tbody.insertRow();
+                    tr.insertCell().textContent = index + 1;
+                    tr.insertCell().textContent = row.querySelector('.student-class').value;
+                    tr.insertCell().textContent = row.querySelector('.student-id').value;
+                    tr.insertCell().textContent = row.querySelector('.student-name').value;
+                    let role = row.querySelector('.student-role').value;
+                    if (role === '其他') role = row.querySelector('.student-role-other').value || '其他';
+                    tr.insertCell().textContent = role;
+                    tr.insertCell().textContent = row.querySelector('.student-awards').value.replace(/\n/g, '; ');
+                    tr.insertCell().textContent = row.querySelector('.student-prizes').value.replace(/\n/g, '; ');
+                    tr.insertCell().textContent = row.querySelector('.student-attendance').value;
+                    tr.insertCell().textContent = row.querySelector('.student-absence-reason').value;
+                    tr.insertCell().textContent = row.querySelector('.student-lateness-reason').value;
+                    tr.insertCell().textContent = getFormTimeFromRaw(row.querySelector('.student-arrival-time').value);
+                    tr.insertCell().textContent = row.querySelector('.student-remarks').value;
+                });
+                studentListRenderArea.appendChild(table);
+
+                setElementText('pdf-b-total-awards-count', document.getElementById('total-awards-count').textContent);
+                document.getElementById('pdf-b-unique-awards-list').innerHTML = document.getElementById('unique-awards-list').innerHTML;
+                document.getElementById('pdf-b-unique-prizes-list').innerHTML = document.getElementById('unique-prizes-list').innerHTML;
+            }
+
+            async function generateBFormPdf() {
+                if (activityPhotos.length === 0) {
+                    alert("請至少上載一張具代表性的活動相片。");
+                    return;
+                }
+                showLoader();
+                await new Promise(resolve => setTimeout(resolve, 50));
+
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const PDF_MARGIN_X_MM = 10;
+                const PDF_MARGIN_Y_TOP_MM = 10;
+                const PDF_MARGIN_Y_BOTTOM_MM = 10;
+                const pdfPageWidth = pdf.internal.pageSize.getWidth();
+                const pdfPageHeight = pdf.internal.pageSize.getHeight();
+                const printablePdfWidth = pdfPageWidth - (PDF_MARGIN_X_MM * 2);
+                const printablePdfHeight = pdfPageHeight - PDF_MARGIN_Y_TOP_MM - PDF_MARGIN_Y_BOTTOM_MM;
+                
+                currentGlobalPdfY = PDF_MARGIN_Y_TOP_MM;
+                isFirstPageOfEntireDocumentGlobal = true;
+
+                try {
+                    populateBFormTemplate();
+                    const bFormElement = document.getElementById('pdf-template-b-form');
+                    const photoRenderArea = bFormElement.querySelector('#pdf-b-photo-render-area');
+                    photoRenderArea.style.display = 'none'; 
+
+                    bFormElement.style.display = 'block';
+                    bFormElement.style.height = 'auto';
+                    bFormElement.style.overflow = 'visible';
+
+                    const canvas = await html2canvas(bFormElement, { scale: 2.5, useCORS: true, logging: false, imageTimeout: 5000, height: bFormElement.scrollHeight, windowHeight: bFormElement.scrollHeight });
+                    bFormElement.style.display = 'none';
+                    photoRenderArea.style.display = ''; 
+
+                    let renderState = await addCanvasToPdfWithSlicing(pdf, canvas, currentGlobalPdfY, isFirstPageOfEntireDocumentGlobal, PDF_MARGIN_X_MM, PDF_MARGIN_Y_TOP_MM, printablePdfWidth, printablePdfHeight);
+                    currentGlobalPdfY = renderState.finalY;
+                    isFirstPageOfEntireDocumentGlobal = renderState.isDocStillFirstPage;
+
+                    const PHOTO_COLS = 2;
+                    const PHOTO_GAP_MM = 4;
+                    const photoWidthMm = (printablePdfWidth - (PHOTO_COLS - 1) * PHOTO_GAP_MM) / PHOTO_COLS;
+                    
+                    if (activityPhotos.length > 0) {
+                         if (currentGlobalPdfY > PDF_MARGIN_Y_TOP_MM + 0.1 || (currentGlobalPdfY === PDF_MARGIN_Y_TOP_MM && !isFirstPageOfEntireDocumentGlobal) ) {
+                            pdf.addPage();
+                            currentGlobalPdfY = PDF_MARGIN_Y_TOP_MM;
+                            isFirstPageOfEntireDocumentGlobal = false;
+                         }
+                    }
+
+
+                    for (let i = 0; i < activityPhotos.length; i++) {
+                        const file = activityPhotos[i];
+                        const reader = new FileReader();
+                        const imgDataUrl = await new Promise((resolve, reject) => {
+                            reader.onload = e => resolve(e.target.result);
+                            reader.onerror = reject;
+                            reader.readAsDataURL(file);
+                        });
+
+                        const imgProps = pdf.getImageProperties(imgDataUrl);
+                        const imgRatio = imgProps.width / imgProps.height;
+                        const photoHeightMm = photoWidthMm / imgRatio;
+
+                        const colIndex = i % PHOTO_COLS;
+                        
+                        let currentX = PDF_MARGIN_X_MM + colIndex * (photoWidthMm + PHOTO_GAP_MM);
+                        
+                        if (colIndex === 0 && i > 0) { 
+                             currentGlobalPdfY += PHOTO_GAP_MM; 
+                        }
+
+                        if (currentGlobalPdfY + photoHeightMm > PDF_MARGIN_Y_TOP_MM + printablePdfHeight) {
+                            pdf.addPage();
+                            currentGlobalPdfY = PDF_MARGIN_Y_TOP_MM;
+                            isFirstPageOfEntireDocumentGlobal = false;
+                            currentX = PDF_MARGIN_X_MM; 
+                        }
+                        
+                        pdf.addImage(imgDataUrl, 'PNG', currentX, currentGlobalPdfY, photoWidthMm, photoHeightMm, undefined, 'FAST');
+
+                        if (colIndex === PHOTO_COLS - 1 || i === activityPhotos.length - 1) { 
+                            currentGlobalPdfY += photoHeightMm;
+                        }
+                    }
+                    pdf.save('B表_最終名單及比賽獎項記錄表.pdf');
+                } catch (error) {
+                    console.error("生成B表 PDF時發生錯誤:", error);
+                    alert("生成B表 PDF時發生錯誤: " + (error.message || error));
+                } finally {
+                    document.getElementById('pdf-template-b-form').style.display = 'none';
+                    hideLoader();
+                }
+            }
+            generatePdfBButton.addEventListener('click', generateBFormPdf);
 
         }); 
     </script>
